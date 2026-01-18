@@ -1,0 +1,145 @@
+.logout-wrapper {
+  display: flex;
+  direction: ltr;
+  margin-top: 16%;
+  margin-bottom: 10%;
+  direction: ltr;
+
+}
+
+.logout-content {
+  flex: 1;
+  margin-right: 60px;
+  text-align: center;
+   margin-top: 11%;
+   
+
+}
+
+.logout-title {
+  font-size: 32px;
+  font-weight: 700;
+  margin-top: 80px;
+  margin-bottom: 30px;
+}
+.logoutmarketing-sidebar {
+    width: 26%;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  min-width: 200px;
+  margin-top: 9%;
+}
+/* زر تسجيل الخروج */
+.logout-main-btn2 {
+  background: #d22121;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  font-size: 20px;
+  padding: 14px 80px;
+  cursor: pointer;
+}
+
+/* لو حابة تبيني إن زر تسجيل الخروج في الـ sidebar هو المختار */
+.active-logout {
+  background: #d22121;
+  color: #fff;
+  border-color: #d22121;
+}
+
+/* -------- Responsive -------- */
+@media (max-width: 768px) {
+  /* Layout adjustments for tablet screens */
+  .mmarketing-page {
+    flex-direction: column; 
+    align-items: center;
+    gap: 30px; 
+    padding: 20px; 
+  }
+.marketing-content {
+  margin: auto !important;
+  font-size: 16px;
+}
+  .m-marketing-sidebar {
+    width: 80%; /* Sidebar takes 80% of the width on tablets */
+    gap: 15px; /* Slightly reduce spacing between buttons */
+  }
+
+  .side-btn {
+    padding: 14px; /* Adjust padding for proportional button sizing */
+    font-size: 16px; /* Scale down font size for smaller screens */
+  }
+
+
+
+  .marketing-logo {
+    width: 220px; /* Resize logo to fit better on tablets */
+  }
+
+  .marketing-text {
+    font-size: 16px; /* Smaller text for responsive design */
+    line-height: 34px; /* Adjust line height for compact layout */
+    margin-bottom: 30px; /* Reduce bottom margin */
+  }
+
+  .marketing-main-btn {
+    width: 90%; /* Wider button for better touch interaction */
+    font-size: 18px; /* Slightly smaller text for proportionality */
+  }
+  .logoutmarketing-sidebar .side-btn {
+        font-size: 14px;
+    }
+    .logout-text{
+  font-size: 14px;
+}
+}
+@media (max-width: 1024px) {
+  .profile-wrapper{
+    margin: auto;
+  }
+  .logout-wrapper {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    /* margin: 6% 10% 10% 10%; خففنا الهوامش الجانبية */
+  }
+
+  .logout-content {
+    margin-right: 0; 
+    text-align: center;
+  }
+   .marketing-sidebarr {
+    width: 100% !important; 
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 10px;
+  }
+  .logoutmarketing-sidebar {
+
+        padding-top: 42%;
+}
+.logoutmarketing-sidebar .side-btn{
+  font-size: 14px;
+}
+.side-btn.active{
+  font-size: 18px;
+}
+
+}
+
+@media (max-width: 600px) {
+ .logout-wrapper .logout-title {
+        font-size: 19px;
+        margin-top: 23px;
+        margin-bottom: 25px;
+  
+  }
+    .logout-main-btn2 {
+        width: 90%;
+        padding: 9px 0;
+        font-size: 16px;
+        margin-bottom: 16%;
+    }
+}

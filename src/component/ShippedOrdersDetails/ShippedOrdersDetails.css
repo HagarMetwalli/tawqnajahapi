@@ -1,0 +1,25 @@
+.confirmed-message{
+    color: #18439e;
+    font-size: 25px;
+}
+@media (max-width:768px) {
+    .orderdetails-page {
+        margin-top: 13% !important;
+    }
+    .customer-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 0;
+    }
+    .row-line{
+      
+        flex-direction: row; 
+    }
+    .product-details-box .lastrow-line .label,
+    .product-details-box .lastrow-line .value {
+                width: 82%;
+                   flex-direction: row;
+                           font-size: 12px;
+
+    }
+}

@@ -1,0 +1,26 @@
+.cancelled{
+        color: #9E9E9E;
+    font-size: 30px;
+    font-weight: 400;
+    margin-top: 5%;
+}
+@media screen and (max-width:480px){
+    .orderdetails-page {
+        margin-top: 30% !important;
+    }
+    
+}
+@media (max-width:768px) {
+    .orderdetails-page {
+        margin-top: 13% !important;
+    }
+    .customer-info {
+        flex-direction: column;
+        text-align: center;
+        gap: 0;
+    }
+    .product-details-box .lastrow-line .label,
+    .product-details-box .lastrow-line .value {
+                width: 82%;
+    }
+}

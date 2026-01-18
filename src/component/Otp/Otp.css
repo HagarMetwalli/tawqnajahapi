@@ -1,0 +1,104 @@
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+body {
+  font-family: 'tajawal', sans-serif;
+}
+
+.otp-wrapper .otp-form {
+  width: 50%;
+  padding-left: 5%;
+  padding-right: 2%;
+  margin-top: 13%;
+}
+
+.otp-title {
+  font-size: 22px;
+  font-weight: bold;
+}
+
+.otp-desc {
+  font-size: 16px;
+  color: #666;
+  margin-bottom: 25px;
+}
+
+.otp-inputs {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-top: 20px;
+}
+
+.otp-inputs input {
+  width: 55px;
+  height: 60px;
+  border-radius: 12px;
+  border: 1.5px solid #1D3A77;
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  outline: none;
+}
+
+.otp-inputs input:focus {
+  border-color: #255acb;
+}
+
+.otp-error {
+  color: red;
+  margin-top: 10px;
+}
+
+.otp-btn {
+  background-color: #1D3A77;
+  font-size: 20px;
+  padding: 12px;
+  border-radius: 10px;
+  border: none;
+  width: 100%;
+  font-weight: 600;
+}
+
+.otp-btn:hover {
+  background-color: #255acb;
+}
+.otp-logo img{
+        width: 22%;
+
+}
+/* MOBILE */
+@media (max-width: 768px) {
+  .otp-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 16px;
+  }
+
+  .otp-form {
+    width: 100% !important;
+    max-width: 380px;
+    margin: auto;
+    padding: 0;
+    text-align: center;
+  }
+
+  .otp-image {
+    display: none;
+  }
+
+  .otp-inputs {
+    gap: 10px;
+  }
+
+  .otp-inputs input {
+    width: 50px;
+    height: 55px;
+  }
+  
+}

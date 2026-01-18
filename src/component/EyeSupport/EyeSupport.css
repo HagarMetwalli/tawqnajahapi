@@ -1,0 +1,156 @@
+.support-wrapper{
+    margin-top: 12%;
+}
+.input-box{
+        background: #FAFAFA;
+    border: 1px solid #E9E9E9;
+    padding: 11px;
+}
+.label-title{
+    font-size: 20px;
+    font-weight: bold;
+}
+.support-tabs{
+        margin-top: 7%;
+
+}
+.support-tabs-column {
+  display: flex;
+  justify-content: flex-start;
+}
+
+.support-tabs {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 15px;
+}
+
+.support-tab {
+    width: 92%;
+    padding: 14px 24px 14px 32px;
+    border-radius: 12px;
+    font-size: 18px;
+    cursor: pointer;
+    font-weight: 600;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    color: #000;
+}
+
+.support-tab.active-tab {
+  background: #1D3A77;
+  color: #fff;
+}
+.support-tab.active-tab span {
+  background: #1D3A77;
+  color: #fff;
+}
+.inactive-tab {
+  background: white;
+  border: 2px solid #ECECEC;
+}
+.f-text{
+    color: #000;
+    font-size: 20px;
+    font-weight: bold;
+    
+}
+.eye-text{
+      /* color: #fff; */
+    font-size: 20px;
+    font-weight: bold;
+      
+    padding-right: 24px;
+}
+.submit-btn{
+  margin-bottom: 10%;
+}
+/* === MODAL CONTAINER === */
+.custom-success-modal .modal-content {
+  border-radius: 20px;
+  padding: 20px;
+  border: none;
+}
+
+/* === BODY === */
+.custom-modal-body {
+  padding: 35px 25px;
+  direction: rtl;
+}
+
+/* === ICON === */
+.modal-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  font-size: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 15px;
+  color: #fff;
+}
+
+/* success */
+.modal-icon.success {
+  background: #2ecc71;
+}
+
+/* error */
+.modal-icon.error {
+  background: #e74c3c;
+}
+
+/* === TITLE === */
+.modal-title-text {
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #000;
+}
+
+/* === DESC === */
+.modal-desc {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 25px;
+}
+
+/* === BUTTON === */
+.modal-confirm-btn {
+  width: 100%;
+  background: #1D3A77;
+  color: #fff;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.modal-confirm-btn:hover {
+  background: #162f5f;
+}
+
+@media screen and (max-width:480px){
+  .support-wrapper .label-title{
+    padding-top: 1px;
+  }
+  .support-tabs-column {
+                 margin-top: 30%;
+        margin-bottom: 0%;
+    
+}
+.support-tabs{
+ padding-top: 37%;
+     margin-bottom: 10%;
+
+}
+.support-wrapper .submit-btn{
+    margin-bottom: 18%;
+
+}
+}

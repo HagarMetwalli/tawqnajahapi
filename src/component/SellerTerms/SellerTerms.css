@@ -1,0 +1,79 @@
+.terms-page {
+  max-width: 900px;
+  margin: auto;
+  font-family: "Cairo", "Tajawal", sans-serif;
+  color: #111;
+  line-height: 1.9;
+}
+
+/* العنوان الرئيسي */
+.terms-title {
+  font-size: 26px;
+  font-weight: 700;
+  text-align: right;
+  margin-bottom: 15px;
+}
+
+/* النص التعريفي تحت العنوان */
+.terms-page > p {
+  font-size: 16px;
+  margin-bottom: 18px;
+  color: #222;
+}
+
+/* الخط الفاصل */
+.terms-page hr {
+  border: none;
+  border-top: 1px solid #cfcfcf;
+  margin: 25px 0;
+}
+
+/* عناوين الأقسام */
+.terms-heading {
+  font-size: 20px;
+  font-weight: 700;
+  color: #1e3a8a; /* أزرق مثل الصورة */
+  margin: 30px 0 12px;
+}
+
+/* القوائم */
+.terms-page ul,
+.terms-page ol {
+  padding-right: 20px;
+  margin-bottom: 20px;
+}
+
+.terms-page li {
+  font-size: 16px;
+  margin-bottom: 10px;
+}
+
+/* الفقرات العادية */
+.terms-page p {
+  font-size: 16px;
+  margin-bottom: 12px;
+}
+
+/* الفوتر */
+.terms-footer {
+  margin-top: 35px;
+  font-size: 14px;
+  color: #666;
+  text-align: center;
+}
+
+/* موبايل */
+@media (max-width: 768px) {
+  .terms-title {
+    font-size: 22px;
+  }
+
+  .terms-heading {
+    font-size: 18px;
+  }
+
+  .terms-page p,
+  .terms-page li {
+    font-size: 15px;
+  }
+}

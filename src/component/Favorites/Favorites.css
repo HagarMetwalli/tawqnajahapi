@@ -1,0 +1,433 @@
+.table-wrapper {
+  border-radius: 14px;
+  overflow: hidden;
+  margin-top: 11%;
+  padding-bottom: 5px !important;
+  margin-bottom: 15% !important;
+}
+.table-wrapper table {
+  width: 100% !important;
+  border-spacing: 0;
+  overflow: hidden;
+  padding-top: 0px;
+  margin-bottom: 20px;
+  background-color: none;
+} /* BORDER-RADIUS + COLOR FOR HEADER */
+.custom-table thead {
+  background: #ff580e;
+}
+.custom-table thead tr.table-heading-row th {
+  background: #ff580e;
+  color: #fff;
+  font-size: 18px;
+  padding: 16px 10px;
+  font-weight: bold;
+  border: none;
+} /* normal cell padding override */
+.custom-table .cart-btn,
+.custom-table th {
+  padding: 10px 0 !important;
+  vertical-align: middle !important;
+} /* PRODUCT INFO */
+.prod-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.shirt {
+  width: 65px;
+  height: 65px;
+  border-radius: 8px;
+  object-fit: cover;
+}
+.prod-text {
+  display: flex;
+  flex-direction: column;
+}
+.prod-name {
+  font-size: 18px;
+  font-weight: bold;
+}
+.prod-rate {
+  font-size: 16px;
+  color: #999;
+  font-weight: bold;
+}
+.prod-rate i {
+  color: #ffd900;
+}
+.p-table {
+  padding-top: 0px;
+} /* PRICE AND DATE */
+.cprice,
+.cdate {
+  font-size: 17px;
+  font-weight: bold;
+} /* CART BUTTON */
+.custom-table .cart-btn {
+  cursor: pointer;
+  background: #1d3a77;
+  width: 72%;
+  height: 50px;
+  border-radius: 25px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.cart-btn img {
+  height: 20px;
+} /* ROW BORDER */
+.brdr {
+  border-bottom: 1px solid #000;
+}
+.custom-table tbody tr td {
+  margin-top: 30px !important;
+  padding-top: 35px;
+} /* ACTION BUTTONS ALIGNED LEFT WITH NO GAP */
+.fav-actions {
+  display: flex;
+  justify-content: flex-start;
+  gap: 25px;
+  margin-top: 20px;
+  margin-right: 10px;
+  direction: ltr;
+}
+.delete-all {
+  background: transparent;
+  border: none;
+  color: red;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+.add-all {
+  background: #1d3a77;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 25px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 18px;
+  cursor: pointer;
+  border: none;
+} /* FIX table header radius */
+.custom-table thead {
+  border-radius: 14px 14px 0 0;
+  overflow: hidden;
+  display: table-header-group;
+} /* MAKE SURE table does not overflow wrapper */
+.table-wrapper {
+  border-radius: 14px;
+  overflow: hidden; /* مهم جداً */
+} /* ENSURE table fits inside perfectly */
+.table-wrapper table {
+  width: 100%;
+  table-layout: fixed;
+}
+.table-header {
+  background: #ff580e;
+  color: white;
+  display: flex; /* grid-template-columns: 1fr 1fr 1fr; */
+  padding: 16px;
+  border-radius: 14px 14px 0 0;
+  font-weight: bold;
+  font-size: 18px;
+  margin-bottom: 0;
+  justify-content: flex-start;
+  gap: 200px;
+} /* ===================== FAVORITES RESPONSIVE (MOBILE FIX) ===================== */ /* =========================== MOBILE / SMALL-TABLET: up to 768px (card layout for phones & small tablets) =========================== */ /* =============================== FAVORITES – MOBILE VIEW max-width: 768px =============================== */
+@media (max-width: 768px) {
+  .card-btn-sm {
+    background: #1d3a77;
+    margin-block: 10px;
+    color: #fff;
+    padding: 8px 10px;
+    border-radius: 25px;
+    text-align: center;
+    font-size: 14px;
+    cursor: pointer;
+    border: none;
+  }
+  .shirt {
+    width: 150px;
+    height: 150px;
+    border-radius: 10px;
+  }
+  .prod-text {
+    width: 100%;
+  }
+  .card-desc {
+    text-align: right;
+  }
+  .title-rating-row {
+    flex-direction: row;
+    align-items: start !important;
+    width: 100%;
+  }
+  .p-table {
+    padding-top: 1px;
+  }
+  .p-table .container {
+    padding: 0 14px !important;
+  } /* HIDE DESKTOP HEADER */
+  .table-header {
+    display: none !important;
+  } /* TABLE → CARDS */
+  /* .custom-table,
+  .custom-table tbody,
+  .custom-table tr,
+  .custom-table td {
+    display: block !important;
+    width: 100% !important;
+  }  */
+  /* CARD */
+  .custom-table tr {
+    background: #fff;
+    border-radius: 14px;
+    padding: 14px;
+    margin-bottom: 16px;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
+  }
+  .brdr {
+    border-bottom: none !important;
+  }
+  .custom-table td {
+    border: none !important;
+    padding: 6px 0 !important;
+    text-align: left;
+    background: none;
+  } /* PRODUCT INFO */
+  .prod-info {
+    display: flex;
+    align-items: start;
+    gap: 20px;
+    margin-top: 0 !important;
+  }
+  /* .shirt {
+    width: 70px;
+    height: 70px;
+    border-radius: 10px;
+    object-fit: cover;
+  } */
+  .prod-name {
+    font-size: 16px;
+    font-weight: bold;
+  }
+  .prod-rate {
+    font-size: 14px;
+    color: #777;
+    font-weight: bold;
+  } /* PRICE & DATE */
+  .cprice,
+  .cdate {
+    display: none;
+  }
+  .cprice::before {
+    content: "السعر: ";
+    font-weight: bold;
+    margin-left: 6px;
+  }
+  .cdate::before {
+    content: "التاريخ: ";
+    font-weight: bold;
+    margin-left: 6px;
+  } /* CART BUTTON */
+  .cart-btn {
+    width: 100% !important;
+    height: 44px;
+    margin-top: 10px;
+    border-radius: 22px;
+    background: #1d3a77;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+  }
+  .cart-btn span {
+    font-size: 15px;
+  }
+  .cart-btn img {
+    height: 18px;
+  } /* BOTTOM ACTIONS */
+  .fav-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 20px;
+    margin-right: 0;
+  }
+  .add-all,
+  .delete-all {
+    width: 100%;
+    justify-content: center;
+    font-size: 16px;
+  }
+  .add-all {
+    padding: 12px;
+  }
+  .delete-all {
+    text-align: center;
+  }
+  .cdate,
+  .datetext {
+    display: none;
+  }
+  .cdate,
+  .datetext {
+    display: none !important;
+  }
+  .prod-main {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+  }
+  .mobile-price {
+    font-size: 15px;
+    font-weight: bold;
+    color: #000;
+    white-space: nowrap;
+  } /* .custom-table .cprice { display: none !important; } */
+  .custom-table tr td:first-child {
+    width: 100%;
+  } /* صف المنتج بالكامل */
+  .custom-table tr {
+    position: relative;
+  } /* كلمة السعر */
+  .cprice::before {
+    content: "السعر";
+    display: block;
+    font-weight: bold;
+    margin-bottom: 10px;
+  } /* السعر نفسه */
+  .cprice {
+    position: absolute;
+    left: 14px;
+    top: 14px;
+    text-align: left;
+    font-size: 15px;
+    font-weight: 700;
+  }
+  .pricenumber {
+    padding-top: 10px;
+  }
+} /* =============================== EXTRA SMALL DEVICES max-width: 420px =============================== */
+@media (max-width: 420px) {
+  .prod-name {
+    font-size: 15px;
+  }
+  .prod-rate {
+    font-size: 13px;
+    display: flex;
+    justify-content: flex-start;
+  }
+  .cprice,
+  .cdate {
+    font-size: 14px;
+  } /* .pricenumber{ padding-top: 10px; } */
+  .cdate {
+    display: none;
+  }
+  .cart-btn {
+    height: 42px;
+  }
+  .cdate,
+  .datetext {
+    display: none !important;
+  }
+} /* =========================== TABLET: 769px — 1023px (table-like layout with larger fonts) =========================== */
+@media (min-width: 769px) and (max-width: 1023px) {
+  /* container / spacing */
+  .orders-page .container,
+  .p-table .container {
+    max-width: 92% !important;
+    padding: 0 18px !important;
+    margin: 0 auto !important;
+  }
+  .table-wrapper {
+    margin-top: 20px !important;
+    padding: 12px !important;
+  } /* restore table layout (rows & columns) for tablet */
+  .table-header {
+    display: grid !important;
+  } /* keep desktop header visible on tablets */
+  .custom-table,
+  .custom-table tbody {
+    display: table !important;
+    width: 100% !important;
+    table-layout: fixed !important;
+  }
+  .custom-table tr {
+    display: table-row !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .custom-table td {
+    display: table-cell !important;
+    vertical-align: middle !important;
+    padding: 12px 8px !important;
+  } /* table header grid columns */
+  .table-header {
+    grid-template-columns: 2fr 1fr 1fr;
+    padding: 14px !important;
+    border-radius: 12px !important;
+  } /* product cell */
+  .prod-info {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin-top: 0 !important;
+  }
+  /* .shirt {
+    width: 88px !important;
+    height: 88px !important;
+    border-radius: 10px !important;
+  } */
+  .prod-name {
+    font-size: 18px !important;
+  }
+  .prod-rate {
+    font-size: 16px !important;
+  } /* price/date */
+  .cprice,
+  .cdate {
+    font-size: 17px !important;
+    font-weight: 700 !important;
+    text-align: right !important;
+  } /* cart button smaller but still tappable */
+  .custom-table .cart-btn,
+  .cart-btn {
+    width: 72% !important;
+    height: 48px !important;
+    border-radius: 24px !important;
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+  }
+  .cart-btn span {
+    font-size: 16px !important;
+  }
+  .cart-btn img {
+    height: 20px !important;
+  } /* action buttons inline (keep same as desktop but slightly bigger) */
+  .fav-actions {
+    flex-direction: row !important;
+    gap: 20px !important;
+    margin-top: 20px !important;
+  }
+  .add-all,
+  .delete-all {
+    font-size: 18px !important;
+    padding: 12px 20px !important;
+  } /* ensure no unexpected overflow */
+  .table-wrapper,
+  .custom-table {
+    box-sizing: border-box !important;
+    overflow: visible !important;
+  }
+}

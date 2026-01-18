@@ -1,0 +1,314 @@
+.tn-uppernav {
+  width: 100%;
+  background: #ffffff;
+  padding: 8px 0;
+  position: fixed;
+  top: 0px;
+  z-index: 10000;
+  border-bottom: 1px solid #eee;
+  direction: rtl;
+  height: 80px;
+}
+
+.tn-uppernav-wrapper {
+  display: flex;
+  align-items: center;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.tn-nav-logo {
+  width: 20%;
+  margin-top: 0;
+}
+
+.tn-search-box {
+  width: 30%;
+  position: relative;
+  margin-top: 8px;
+}
+
+.tn-search-box i {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.tn-search-box input {
+  width: 100%;
+  padding: 12px 35px 12px 12px;
+  margin-bottom: 0;
+  border-radius: 30px;
+  border: none;
+  background: #f1f1f1;
+  font-size: 16px;
+  outline: none;
+}
+
+.tn-left-icons {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+}
+
+.tn-nav-icon {
+  font-size: 18px;
+  color: #0c317a;
+  cursor: pointer;
+}
+
+.tn-lang-btn {
+  background: #ffe8e1;
+  padding: 6px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  color: #0c317a;
+  cursor: pointer;
+}
+/*padding-top: 9px;*/
+@media (max-width: 576px) {
+  .tn-uppernav {
+height: 66px;
+        padding: 17px 0;
+        top: -1px;
+    }
+  .tn-uppernav-wrapper {
+    gap: 8px;
+  }
+
+  .tn-nav-logo {
+        width: 9%;
+  }
+
+  /* نخفي البحث على الموبايل */
+  .tn-search-box {
+    display: none;
+  }
+
+  .tn-left-icons {
+    gap: 8px;
+  }
+
+  .tn-nav-icon {
+    font-size: 14px;
+  }
+
+  .tn-lang-btn {
+    font-size: 10px;
+        padding: 3px 8px;
+  }
+.tn-lang-btn i{
+      font-size: 9px;
+}
+  svg {
+    max-width: 28px;
+    max-height: 28px;
+  }
+}
+@media screen and  (min-width:577px) and (max-width: 768px) {
+  .tn-uppernav {
+        top: 1px;
+    height: 80px;
+  }
+.tn-uppernav-wrapper{
+        width: 93%;
+
+}
+  .tn-nav-logo {
+    width: 8%;
+  }
+
+  .tn-search-box {
+    width: 40%;
+  }
+
+  .tn-search-box input {
+          padding: 0px 35px 0px 0;
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
+  }
+
+  .tn-left-icons {
+    gap: 10px;
+  }
+
+  .tn-nav-icon {
+    font-size: 16px;
+  }
+
+  .tn-lang-btn {
+    padding: 3px 14px;
+        font-size: 10px;
+
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .tn-uppernav {
+    top: 1px;
+    height: 80px;
+  }
+
+  .tn-nav-logo {
+    width: 10%;
+  }
+  .tn-uppernav {
+        top: 1px;
+    height: 80px;
+  }
+.tn-uppernav-wrapper{
+        width: 93%;
+
+}
+  .tn-nav-logo {
+    width: 6%;
+  }
+
+  .tn-search-box {
+    width: 40%;
+  }
+
+  .tn-search-box input {
+          padding: 0px 35px 0px 0;
+        height: 30px;
+        width: 100%;
+        font-size: 12px;
+  }
+
+  .tn-left-icons {
+    gap: 10px;
+  }
+
+  .tn-nav-icon {
+    font-size: 16px;
+  }
+
+  .tn-lang-btn {
+    padding: 3px 14px;
+        font-size: 10px;
+
+  }
+
+}
+
+@media (min-width: 1024px) {
+  .tn-uppernav {
+    height: 90px;
+        top: -3px;
+  }
+
+  .tn-uppernav-wrapper {
+    width: 95%;
+  }
+
+  .tn-nav-logo {
+        width: 6%;
+  }
+
+  .tn-search-box {
+    width: 45%;
+  }
+
+  .tn-search-box input {
+        padding: 8px 36px 10px 14px;
+        font-size: 15px;
+        height: 40px;
+    
+  }
+
+  .tn-left-icons {
+    gap: 12px;
+  }
+
+  .tn-nav-icon {
+    font-size: 18px;
+  }
+
+  .tn-lang-btn {
+    font-size: 13px;
+    padding: 6px 16px;
+  }
+}
+
+@media (min-width: 1440px) {
+  .tn-uppernav {
+    height: 100px;
+    padding: 12px 0;
+  }
+
+  .tn-uppernav-wrapper {
+    width: 93%;
+  }
+
+  .tn-nav-logo {
+    width: 6%;
+  }
+
+  .tn-search-box {
+    width: 50%;
+  }
+
+  .tn-search-box input {
+    padding: 14px 40px 14px 14px;
+    font-size: 16px;
+  }
+
+  .tn-nav-icon {
+    font-size: 20px;
+  }
+}
+
+
+@media (min-width: 1920px) {
+  .tn-uppernav {
+    height: 100px;
+    padding: 14px 0;
+    top: 0px;
+  }
+
+  .tn-uppernav-wrapper {
+    width: 95%;
+    gap: 20px;
+  }
+
+  .tn-nav-logo {
+    width: 6%;
+  }
+
+  .tn-search-box {
+    width: 60%;
+  }
+
+  .tn-search-box input {
+    padding: 16px 50px 16px 16px;
+    font-size: 18px;
+  }
+
+  .tn-left-icons {
+    gap: 20px;
+  }
+
+  .tn-nav-icon {
+    font-size: 22px;
+  }
+
+  .tn-lang-btn {
+    padding: 10px 20px;
+    font-size: 16px;
+  }
+
+  svg {
+    width: 36px;
+    height: 36px;
+  }
+
+}
+@media (min-width:2560px){
+  .tn-uppernav {
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+}

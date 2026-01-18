@@ -1,0 +1,125 @@
+.partners-section {
+  padding: 40px 20px; /* Adjust padding for smaller screens */
+  text-align: center;
+  direction: rtl;
+  background: #fafafa; /* Consistent light background */
+}
+
+.partners-title {
+  font-size: 24px; /* Slightly smaller font for smaller devices */
+  font-weight: bold;
+  margin-bottom: 30px; /* Reduced spacing for smaller screens */
+  color: #1d3a77;
+}
+
+.partners-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* Dynamic layout for responsiveness */
+  gap: 25px; /* Consistent spacing */
+  padding: 0 20px; /* Reduced padding for smaller screens */
+  max-width: 1100px;
+  margin: auto; /* Centers grid */
+}
+
+.partner-card {
+  background: #fff;
+  border-radius: 16px; /* Slightly rounded corners */
+  padding: 20px 15px; /* Adjust padding for smaller devices */
+  text-align: center;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+  transition: 0.3s ease;
+
+  /* Hover effect */
+  transform: translateY(0); /* Default position */
+}
+
+.partner-card:hover {
+  transform: translateY(-6px); /* Slight hover effect */
+}
+
+.partner-icon {
+  width: 80px;
+  height: 80px;
+  background: #1d3a77;
+  color: #fff;
+  border-radius: 50%; /* Fully rounded */
+  font-size: 30px; /* Icon size */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+
+.partner-card p {
+  font-size: 15px; /* Slightly smaller font size for readability */
+  font-weight: 600;
+  color: #333;
+}
+
+.partner-logo {
+  width: 120px;
+  height: 120px;
+  margin: auto;
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.partner-logo img {
+  max-width: 80%;
+  max-height: 80%;
+  object-fit: contain; /* Ensures proper scaling of logos */
+}
+
+/* Responsive Breakpoints */
+
+/* ✅ Medium screens (≤992px - tablets, small laptops) */
+@media (max-width: 992px) {
+  .partners-grid {
+    grid-template-columns: repeat(2, 1fr); /* Two columns for medium-sized screens */
+  }
+
+  .partners-title {
+    font-size: 22px; /* Adjust font size */
+    margin-bottom: 25px; /* Reduced spacing for tighter layouts */
+  }
+
+  .partner-card {
+    padding: 20px; /* Adjust padding for smaller sections */
+  }
+}
+
+/* ✅ Small screens (≤576px - mobile devices) */
+@media (max-width: 576px) {
+  .partners-grid {
+    grid-template-columns: 1fr; /* Single column for mobile screens */
+  }
+
+  .partners-title {
+ font-size: 22px;
+        margin-bottom: 20px;
+        width: 80%;
+  }
+
+  .partner-card {
+    padding: 15px; /* Compact padding for smaller devices */
+    border-radius: 12px; /* Slightly less rounded corners */
+  }
+
+  .partner-icon {
+    width: 60px;
+    height: 60px;
+    font-size: 24px; /* Adjust icon size for smaller screens */
+    margin-bottom: 10px;
+  }
+
+  .partner-logo {
+    width: 100px;
+    height: 100px; 
+  }
+
+  .partner-card p {
+    font-size: 14px; 
+  }
+}
