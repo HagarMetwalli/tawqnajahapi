@@ -1,85 +1,93 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "../ConfirmedOrders/ConfirmedOrders.css";
-import { useNavigate, useLocation } from "react-router-dom";
-import wintershirt from "../../assets/winter-shirt.jpg";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { BaseUrl } from "../../App";
+import BuyerServicesUrl from "../../BuyerServicesUrl";
 
 export default function ConfirmedOrders() {
   const navigate = useNavigate();
-  const location = useLocation();
+  const [orders, setOrders] = useState([]);
+  const [status, setStatus] = useState("pending");
+  const [loading, setLoading] = useState(false);
 
-  const orders = [
-    {
-      id: 1,
-      title: "جاكيت شتوي",
-      desc: "جاكيت أنيق بتخفيض خاص.",
-      price: "149.99",
-      qty: 1,
-      img: wintershirt,
-    },
-  ];
- const goToDetails = (id) => {
-    navigate(`/confirmordersdetails`);
+  const fetchOrders = async (orderStatus) => {
+    setLoading(true);
+    try {
+      const res = await axios.get(
+        `${BaseUrl}${BuyerServicesUrl.MyOrders}?status=${orderStatus}`,
+        {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        }
+      );
+    
+      setOrders(res.data.data);
+      console.log(res);
+    } catch (err) {
+      console.log(err);
+    }
+    setLoading(false);
   };
+
+  useEffect(() => {
+    fetchOrders(status);
+  }, [status]);
+
   return (
-    <div className="orders-page mt-5 pt-5 mb-0  mobileorders">
-      <div className="container mt-5 mb-0">
+    <div className="orders-page mt-5 pt-5 mobileorders">
+      <div className="container mt-5">
         <div className="row">
 
-          {/* التابات */}
-          <div className="col-lg-3 d-lg-flex justify-content-start tabssection">
+          {/* Tabs */}
+          <div className="col-lg-3 tabssection">
             <div className="orders-right-tabs">
-
               <button
-                className={`cright-tab cright-btn ${
-                  location.pathname === "/confirmedorders" ? "active" : ""
-                }`}
-                onClick={() => navigate("/confirmedordersdetails")}
+                className={`cright-tab ${status === "pending" ? "active" : ""}`}
+                onClick={() => setStatus("pending")}
               >
                 الطلبات الحالية
               </button>
 
               <button
-                className={`cright-tab cright-btn2 ${
-                  location.pathname === "/shippedorders" ? "active" : ""
-                }`}
-                onClick={() => navigate("/shippedorders")}
+                className={`cright-tab ${status === "completed" ? "active" : ""}`}
+                onClick={() => setStatus("completed")}
               >
                 الطلبات المكتملة
               </button>
 
               <button
-                className={`cright-tab cright-btn3 ${
-                  location.pathname === "/canceledorders" ? "active" : ""
-                }`}
-                onClick={() => navigate("/canceledorders")}
+                className={`cright-tab ${status === "cancel" ? "active" : ""}`}
+                onClick={() => setStatus("cancel")}
               >
                 الطلبات الملغية
               </button>
-
             </div>
           </div>
 
-          {/* الكروت */}
-          <div className="col-lg-9 col-12 justify-content-start">
+          {/* Cards */}
+          <div className="col-lg-9 col-12">
             <div className="cards-wrapper mt-5">
-              {orders.map((order, i) => (
-               <div
-  key={i}
-  className="corder-mobile-card"
-  onClick={() => goToDetails(order.id)}
-  style={{ cursor: "pointer" }}
->
 
-                  <img src={order.img} alt="" className="corder-mobile-img" />
+              {loading && <p>جاري التحميل...</p>}
+
+              {!loading && orders.length === 0 && (
+                <p>لا توجد طلبات</p>
+              )}
+
+              {orders.map((order) => (
+                <div
+                  key={order.id}
+                  className="corder-mobile-card"
+                  onClick={() =>
+                    navigate("/confirmordersdetails", { state: order })
+                  }
+                >
                   <div className="order-mobile-content">
-                    <h3 className="corder-mobile-title">{order.title}</h3>
-                    <p className="corder-mobile-desc">{order.desc}</p>
-
-                    <div className="order-bottom-row">
-                      <span className="order-badge">x{order.qty}</span>
-                      <span className="corder-type">ملابس</span>
-                      <span className="confirmorder-price2">{order.price} ر.س</span>
-                    </div>
+                    <h3>طلب رقم #{order.order_number}</h3>
+                    <span>{order.payment_type}</span>
+                    <span>{order.final_total} ر.س</span>
                   </div>
                 </div>
               ))}

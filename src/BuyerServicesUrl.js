@@ -31,6 +31,14 @@ GetCategories: "user/categories",
   // marketing ✅
 GetMarketingData: "user/get-markting-data",
 SendMarketingRequest: "user/send-markting-request",
+// Orders
+MyOrders: "user/my-order",
+//cart 
+AddToCart:"user/add-to-cart",
+ShowCart:"user/show-my-cart",
+ChangeCart:"user/change-cart",
+RemoveCart:"user/remove-from-cart"
+
 
 };
 

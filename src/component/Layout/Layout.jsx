@@ -15,7 +15,8 @@ export default function Layout() {
     "/forgetpassword",
     "/resetpassword",
     "/changepassword",
-    "/accounttype"
+    "/accounttype",
+    "/otp"
   ];
 
   const hideLayout = authRoutes.some(route =>

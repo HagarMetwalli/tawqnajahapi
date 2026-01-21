@@ -205,7 +205,7 @@ display: none;
     padding: 0;
     z-index: 1;
     display: block;
-    margin-bottom: 15%;
+    margin-bottom: 7%;
 }
 .swiper-pagination-fraction, .swiper-pagination-custom, .swiper-horizontal > .swiper-pagination-bullets, .swiper-pagination-bullets.swiper-pagination-horizontal{
   display: none;

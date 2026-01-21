@@ -39,7 +39,7 @@ export default function Otp() {
       setLoading(true);
 
       await axios.post(
-        "https://toknagah.viking-iceland.online/api/user/auth/verification-otp",
+        "https://toknagah.viking-iceland.online/api/user/auth/verification/email",
         {
           email,
           otp: otp.join(""),

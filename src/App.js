@@ -150,6 +150,7 @@ import SellerFooter from './component/SellerFooter/SellerFooter';
 import PrivateRoute from './component/PrivateRoue';
 import Otp from './component/Otp/Otp';
 import SellerOtp from './component/SellerOtp/SellerOtp';
+import Cart from './component/Cart/Cart';
 export const BaseUrl = "https://toknagah.viking-iceland.online/api/";
 const router = createHashRouter([
   {
@@ -246,7 +247,7 @@ const router = createHashRouter([
 {path:'offerssugg',element:<OffersSugg/>},
 {path:'offersdetails',element:<OffersDetails/>},
 {path:'myaddvertisements',element:<Myaddvertisements/>},
-
+{path:'cart',element:<Cart/>},
 {path:'winterdetails',element:<WinterDetails/>},
 
 {path:'/products/:category',element:<AllProductsByCategory/>},

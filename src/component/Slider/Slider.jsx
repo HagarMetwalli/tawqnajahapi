@@ -6,7 +6,6 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 export default function Slider({ items = [] }) {
-  // 🔴 حماية مهمة جدًا
   if (!Array.isArray(items)) {
     console.error("Slider items is not an array:", items);
     return null;
@@ -34,8 +33,11 @@ export default function Slider({ items = [] }) {
                 src={cat.img}
                 alt={cat.name}
                 className="customer-category-icon"
+                onError={(e) => (e.target.src = "/placeholder.png")}
               />
-              <p className="customer-category-name">{cat.name}</p>
+              <p className="customer-category-name">
+                {cat.name}
+              </p>
             </div>
           </SwiperSlide>
         ))}

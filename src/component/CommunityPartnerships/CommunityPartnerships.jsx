@@ -1,8 +1,11 @@
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { useTranslation } from "react-i18next";
 import "./CommunityPartnerships.css";
 import communityAvatar from "../../assets/communitypart.jpg";
 
 export default function CommunityPartnerships() {
+  const { t } = useTranslation();
+
   return (
     <div className="community-page mt-2 pb-5 mb-5">
       <Container>
@@ -11,14 +14,15 @@ export default function CommunityPartnerships() {
           {/* ===== Header ===== */}
           <header className="community-header text-center mt-3">
             <h4 className="community-title fw-bold mb-4 mt-5">
-              إضافة شراكة مجتمعية / <span className="text-muted">الشركات</span>
+              {t("communityTitle")}{" "}
+              <span className="text-muted">{t("communitySubTitle")}</span>
             </h4>
 
             <div className="community-avatar-wrapper mx-auto mb-4">
               <i className="fa fa-edit comm-icon"></i>
               <img
                 src={communityAvatar}
-                alt="صورة الجهة"
+                alt={t("communityImageAlt")}
                 className="community-avatar"
               />
             </div>
@@ -30,26 +34,32 @@ export default function CommunityPartnerships() {
               <Col xs={12} md={8} lg={6}>
 
                 {/* اسم الجهة */}
-                <Form.Label className="mb-2">اسم الجهة المشاركة</Form.Label>
+                <Form.Label className="mb-2">
+                  {t("partnerName")}
+                </Form.Label>
                 <Form.Control
                   className="inputs mb-4"
-                  placeholder="جهة مجتمعية"
+                  placeholder={t("partnerNamePlaceholder")}
                 />
 
                 {/* اسم المندوب */}
-                <Form.Label className="mb-2">اسم المندوب</Form.Label>
+                <Form.Label className="mb-2">
+                  {t("representativeName")}
+                </Form.Label>
                 <Form.Control
                   className="inputs mb-4"
-                  placeholder="اسم المندوب"
+                  placeholder={t("representativeNamePlaceholder")}
                 />
 
                 {/* رقم الهاتف */}
-                <Form.Label className="mb-2">رقم الهاتف</Form.Label>
+                <Form.Label className="mb-2">
+                  {t("phone")}
+                </Form.Label>
                 <Row className="g-2 mb-4">
                   <Col xs={8}>
                     <Form.Control
                       className="inputs"
-                      placeholder="789 456 123"
+                      placeholder={t("phonePlaceholder")}
                     />
                   </Col>
                   <Col xs={4}>
@@ -63,32 +73,38 @@ export default function CommunityPartnerships() {
                 {/* الدولة + المدينة */}
                 <Row className="g-3 mb-4">
                   <Col xs={12} md={6}>
-                    <Form.Label className="mb-2">الدولة</Form.Label>
+                    <Form.Label className="mb-2">
+                      {t("country")}
+                    </Form.Label>
                     <Form.Control
                       className="inputs"
-                      placeholder="الدولة"
+                      placeholder={t("countryPlaceholder")}
                     />
                   </Col>
 
                   <Col xs={12} md={6}>
-                    <Form.Label className="mb-2">المدينة / المحافظة</Form.Label>
+                    <Form.Label className="mb-2">
+                      {t("city")}
+                    </Form.Label>
                     <Form.Control
                       className="inputs"
-                      placeholder="المدينة / المحافظة"
+                      placeholder={t("cityPlaceholder")}
                     />
                   </Col>
                 </Row>
 
                 {/* العنوان */}
-                <Form.Label className="mb-2">العنوان</Form.Label>
+                <Form.Label className="mb-2">
+                  {t("address")}
+                </Form.Label>
                 <Form.Control
                   className="inputs mb-4"
-                  placeholder="العنوان"
+                  placeholder={t("addressPlaceholder")}
                 />
 
                 {/* زر الإرسال */}
                 <Button className="setting-btn w-100" variant="primary">
-                  إرسال الطلب
+                  {t("submitRequest")}
                 </Button>
 
               </Col>

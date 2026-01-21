@@ -1,0 +1,51 @@
+{
+  "search": "البحث عن المنتج",
+  "logout": "تسجيل الخروج",
+  "cancel": "إلغاء",
+  "logoutConfirm": "هل تريد تسجيل الخروج ؟",
+  "home": "الرئيسية",
+  "orders": "طلباتي",
+  "favorites": "المفضلة",
+  "about": " من نحن ؟",
+  "profile": "معلومات الحساب",
+  "marketing": "التسويق",
+  "support": "الدعم",
+  "downloadApp": "تحميل التطبيق",
+  "loading": "جاري تحميل الصفحة...",
+  "heroTag": "أفضل موقع للتسوق الإلكتروني",
+  "heroTitle": "تجربة تسوق ذكية وآمنة",
+  "heroDesc": "أحدث المنتجات – أفضل العروض – توصيل سريع",
+  "shopNow": "تسوق الآن",
+  "viewAll": "شاهد جميع المنتجات",
+  "rating": "+4.9 تقييم",
+  "ratingSub": "ثقة أكثر من 2000 عميل",
+  "featuredOffers": "عروض طوق نجاة",
+  "suggestions": "الاقتراحات",
+  "addToCart": "أضف إلى السلة",
+  "categories": "الفئات",
+  "categoriesError": "حصل خطأ أثناء تحميل الفئات",
+  "communityTitle": "إضافة شراكة مجتمعية /",
+  "communitySubTitle": "الشركات",
+  "communityImageAlt": "صورة الجهة",
+
+  "partnerName": "اسم الجهة المشاركة",
+  "partnerNamePlaceholder": "جهة مجتمعية",
+
+  "representativeName": "اسم المندوب",
+  "representativeNamePlaceholder": "اسم المندوب",
+
+  "phone": "رقم الهاتف",
+  "phonePlaceholder": "789 456 123",
+
+  "country": "الدولة",
+  "countryPlaceholder": "الدولة",
+
+  "city": "المدينة / المحافظة",
+  "cityPlaceholder": "المدينة / المحافظة",
+
+  "address": "العنوان",
+  "addressPlaceholder": "العنوان",
+
+  "submitRequest": "إرسال الطلب"
+
+}

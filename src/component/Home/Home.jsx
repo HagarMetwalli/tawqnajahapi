@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useTranslation } from "react-i18next";
 
 import lock from "../../assets/lock-icon.png";
 import avatar from "../../assets/rateproduct.png";
@@ -16,13 +17,38 @@ import BuyerServicesUrl from "../../BuyerServicesUrl";
 
 export default function Home() {
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   /* ========= STATE ========= */
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
+  const [featuredProducts, setFeaturedProducts] = useState([]);
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
-const [featuredProducts, setFeaturedProducts] = useState([]);
+const addToCart = async (productId) => {
+  try {
+    const token = localStorage.getItem("token");
+
+    await axios.post(
+      BaseUrl + BuyerServicesUrl.AddToCart,
+      { product_id: productId },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+
+    // تحديث السلة في Uppernav
+    window.dispatchEvent(new Event("cartUpdated"));
+
+  } catch (err) {
+    console.log(err); // من غير alert
+  }
+};
+
+
+
 
   /* ========= CHECK TOKEN ========= */
   useEffect(() => {
@@ -36,24 +62,16 @@ const [featuredProducts, setFeaturedProducts] = useState([]);
       try {
         const token = localStorage.getItem("token");
 
-        const res = await axios.get(
-          BaseUrl + BuyerServicesUrl.Home,
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-setFeaturedProducts(res.data.data.ProductToqTajah || []);
-setProducts(res.data.data.products || []);
-
+        const res = await axios.get(BaseUrl + BuyerServicesUrl.Home, {
+          headers: { Authorization: `Bearer ${token}` },
+        });
+        console.log(res)
+        setFeaturedProducts(res.data?.data?.ProductToqTajah || []);
+        setProducts(res.data?.data?.products || []);
         setBanners(res.data?.data?.bannars || []);
-        // setProducts(res.data?.data?.ProductToqTajah || []);
       } catch (error) {
-        console.error("Home API Error:", error);
-        if (error.response?.status === 401) {
-          navigate("/login");
-        }
+        if (error.response?.status === 401) navigate("/login");
+
       } finally {
         setLoading(false);
       }
@@ -62,28 +80,27 @@ setProducts(res.data.data.products || []);
     fetchHome();
   }, [navigate]);
 
-  /* ========= SLIDER AUTO MOVE ========= */
+  /* ========= SLIDER ========= */
   useEffect(() => {
     if (!banners.length) return;
-
-    const interval = setInterval(() => {
-      setCurrent((prev) => (prev + 1) % banners.length);
-    }, 5000);
-
+    const interval = setInterval(
+      () => setCurrent((prev) => (prev + 1) % banners.length),
+      5000
+    );
     return () => clearInterval(interval);
   }, [banners]);
 
   if (loading) {
     return (
       <div className="text-center mt-5 pt-5">
-        <h4>جاري تحميل الصفحة...</h4>
+        <h4>{t("loading")}</h4>
       </div>
     );
   }
 
   return (
     <div className="hero-wrapper pt-5 mt-4">
-      {/* ========== HERO ========== */}
+      {/* ===== HERO ===== */}
       <div className="hero-container">
         <div className="hero-left">
           {banners.map((img, index) => (
@@ -98,26 +115,23 @@ setProducts(res.data.data.products || []);
 
         <div className="hero-right">
           <span className="hero-tag">
-            <img className="lock" src={lock} alt="آمن" />
-            <p className="web-text mb-0">أفضل موقع للتسوق الإلكتروني</p>
+            <img className="lock" src={lock} alt="secure" />
+            <p className="web-text mb-0">{t("heroTag")}</p>
           </span>
 
-          <h1 className="hero-heading">تجربة تسوق ذكية وآمنة</h1>
-
-          <p className="web-order">
-            أحدث المنتجات – أفضل العروض – توصيل سريع
-          </p>
+          <h1 className="hero-heading">{t("heroTitle")}</h1>
+          <p className="web-order">{t("heroDesc")}</p>
 
           <div className="products-info">
             <button
               className="customerbtn"
               onClick={() => navigate("/offerstawq")}
             >
-              تسوق الآن
+              {t("shopNow")}
             </button>
 
             <Link to="/offerstawq" className="products-link-anchor">
-              شاهد جميع المنتجات
+              {t("viewAll")}
             </Link>
           </div>
 
@@ -131,111 +145,89 @@ setProducts(res.data.data.products || []);
             </div>
 
             <div>
-              <span className="ratemaintext">+4.9 تقييم</span>
-              <p className="rate-sub mb-0">ثقة أكثر من 2000 عميل</p>
+              <span className="ratemaintext">{t("rating")}</span>
+              <p className="rate-sub mb-0">{t("ratingSub")}</p>
             </div>
           </div>
         </div>
       </div>
 
-      {/* ========== CATEGORIES ========== */}
+      {/* ===== CATEGORIES ===== */}
       <Categories />
 
-      {/* ========== PRODUCTS ========== */}
+      {/* ===== FEATURED ===== */}
       <div className="container mt-5">
-        <h3 className="mb-4 fw-bold">عروض طوق نجاة</h3>
-
-  <div className="row">
-    {featuredProducts.map((item) => (
-      <div className="col-md-3 col-sm-6 mb-4" key={item.id}>
-        <div className="product-card">
-          {/* <img src={item.image?.[0]} alt={item.name} />
-               <img
-                  src={item.image?.[0] || '/placeholder.png'}
-                  alt=""
-                  //  alt={item.name}
-                /> */}
-                <img
-  src={item.image?.[0] || "/placeholder.png"}
-  alt={item.name}
-  className="product-img"
-  onError={(e) => {
-    e.target.src = "/placeholder.png";
-  }}
-/>
-
-          <h6 className="mt-3">{item.name}</h6>
-          <p className="desc">{item.description.split(" ").slice(0,3).join(" ")}</p>
-          <p className="price pb-2">
-            {item.priceAfterDiscount > 0
-              ? item.priceAfterDiscount
-              : item.price}{" "}
-            {item.currency_type}
-                      {/* <button>أضف الى السلة</button> */}
-
-          </p>
-          <button className="addcart  text-white border-0 pt-2 pb-2 mb-2 ">أضف الى السلة</button>
-
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-      <div className="container mt-5">
-        {/* <h3 className="mb-4 fw-bold">عروض طوق نجاة</h3> */}
-  <h3 className="mb-4 fw-bold"> الاقتراحات  </h3>
-
+        <h3 className="mb-4 fw-bold">{t("featuredOffers")}</h3>
         <div className="row">
-          {products.map((item) => (
+          {featuredProducts.map((item) => (
             <div className="col-md-3 col-sm-6 mb-4" key={item.id}>
               <div className="product-card">
-                {/* <img
-                  src={item.image?.[0] || '/placeholder.png'}
-                  alt=""
-                  //  alt={item.name}
-                /> */}
-                {/* <img
-  src={item.image?.[0] || "/placeholder.png"}
-  alt={item.name}
-  className="product-img"
-  onError={(e) => {
-    e.target.src = "/placeholder.png";
-  }}
-/> */}
-
                 <img
-  src={item.image?.[0] || "/placeholder.png"}
-  alt={item.name}
-  className="product-img"
-  onError={(e) => {
-    e.target.src = "/placeholder.png";
-  }}
-/>
-
-
-
+                  src={item.image?.[0] || "/placeholder.png"}
+                  alt={item.name}
+                  className="product-img"
+                  onError={(e) => (e.target.src = "/placeholder.png")}
+                />
                 <h6 className="mt-3">{item.name}</h6>
-                <p className="desc">{item.description.split(" ").slice(0,3).join(" ")}</p>
-                <p className="price">
-                  {item.priceAfterDiscount && item.priceAfterDiscount > 0
-                    ? item.priceAfterDiscount
-                    : item.price}{" "}
-                  {item.currency_type}
+                <p className="desc">
+                  {item.description?.split(" ").slice(0, 3).join(" ")}
                 </p>
-                <button className="addcart  text-white border-0 pt-2 pb-2 ">أضف الى السلة</button>
+                <p className="price">
+                  {(item.priceAfterDiscount > 0
+                    ? item.priceAfterDiscount
+                    : item.price) +
+                    " " +
+                    item.currency_type}
+                </p>
+                {/* <button className="addcart text-white border-0">
+                  {t("addToCart")}
+                </button> */}
+                <button
+  className="addcart text-white border-0"
+  onClick={() => addToCart(item.id)}
+>
+  {t("addToCart")}
+</button>
+
               </div>
             </div>
           ))}
         </div>
       </div>
-      {/* ========== Suggestions ========== */}
 
+      {/* ===== SUGGESTIONS ===== */}
+      <div className="container mt-5">
+        <h3 className="mb-4 fw-bold">{t("suggestions")}</h3>
+        <div className="row">
+          {products.map((item) => (
+            <div className="col-md-3 col-sm-6 mb-4" key={item.id}>
+              <div className="product-card">
+                <img
+                  src={item.image?.[0] || "/placeholder.png"}
+                  alt={item.name}
+                  className="product-img"
+                  onError={(e) => (e.target.src = "/placeholder.png")}
+                />
+                <h6 className="mt-3">{item.name}</h6>
+                <p className="desc">
+                  {item.description?.split(" ").slice(0, 3).join(" ")}
+                </p>
+                <p className="price">
+                  {(item.priceAfterDiscount > 0
+                    ? item.priceAfterDiscount
+                    : item.price) +
+                    " " +
+                    item.currency_type}
+                </p>
+                <button className="addcart text-white border-0">
+                  {t("addToCart")}
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
 
-      {/* ========== OFFERS ========== */}
-      {/* <OffersTawq /> */}
-      {/* <Offerstawqnajah /> */}
-
-      {/* ========== PARTNERS ========== */}
       <SuccessPartners />
     </div>
   );

@@ -4,6 +4,10 @@
     font-weight: 400;
         /* margin-top: 5%; */
 }
+.orderdetails-page {
+  min-height: calc(100vh - 300px);
+}
+
 @media (max-width:768px) {
     .orderdetails-page {
         margin-top: 13% !important;

@@ -1,0 +1,51 @@
+{
+  "search": "Search for product",
+  "logout": "Logout",
+  "cancel": "Cancel",
+  "logoutConfirm": "Do you want to logout?",
+  "home": "Home",
+  "orders": "My Orders",
+  "favorites": "Favorites",
+  "about": "About Us ?",
+  "profile": "Account Info",
+  "marketing": "Marketing",
+  "support": "Support",
+  "downloadApp": "Download App",
+   "loading": "Loading page...",
+  "heroTag": "Best online shopping platform",
+  "heroTitle": "Smart & Secure Shopping Experience",
+  "heroDesc": "Latest products – Best offers – Fast delivery",
+  "shopNow": "Shop Now",
+  "viewAll": "View All Products",
+  "rating": "+4.9 Rating",
+  "ratingSub": "Trusted by over 2000 customers",
+  "featuredOffers": "Tawq Najah Offers",
+  "suggestions": "Suggestions",
+  "addToCart": "Add to cart",
+  "categories":"Categories",
+  "categoriesError": "An error occurred while loading categories",
+  "communityTitle": "Add Community Partnership /",
+  "communitySubTitle": "Companies",
+  "communityImageAlt": "Organization Image",
+
+  "partnerName": "Partner Organization Name",
+  "partnerNamePlaceholder": "Community Organization",
+
+  "representativeName": "Representative Name",
+  "representativeNamePlaceholder": "Representative Name",
+
+  "phone": "Phone Number",
+  "phonePlaceholder": "789 456 123",
+
+  "country": "Country",
+  "countryPlaceholder": "Country",
+
+  "city": "City / Governorate",
+  "cityPlaceholder": "City / Governorate",
+
+  "address": "Address",
+  "addressPlaceholder": "Address",
+
+  "submitRequest": "Submit Request"
+
+}
