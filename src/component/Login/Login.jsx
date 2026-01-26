@@ -106,7 +106,7 @@ export default function Login() {
             <Link to='/forgetpassword'>
                   <span
                 className="passlink fw-normal fw-bold "
-                onClick={() => navigate("/accounttype")}
+                onClick={() => navigate("/forgetpassword")}
                 style={{ color: "#1d3a77", cursor: "pointer" }}
               >
                 هل نسيت كلمة المرور؟

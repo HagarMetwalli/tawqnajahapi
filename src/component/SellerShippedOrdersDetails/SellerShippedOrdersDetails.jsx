@@ -1,88 +1,112 @@
-import React from "react";
-import "../SellerShippedOrdersDetails/SellerShippedOrdersDetails.css";
+import React, { useEffect, useState } from "react";
+import "../SellerShippedOrders/SellerShippedOrders.css";
+import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { BaseUrl } from "../../App";
+import SellerServicesUrl from "../../SellerServicesUrl";
 
+export default function SellerShippedOrders() {
+  const navigate = useNavigate();
+  const location = useLocation();
 
-export default function SellerShippedOrderDetails() {
+  const [orders, setOrders] = useState([]);
+  const token = localStorage.getItem("token");
+
+  useEffect(() => {
+    axios
+      .get(`${BaseUrl}${SellerServicesUrl.MyOrders}?status=completed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        setOrders(res.data.data || []);
+      })
+      .catch((err) => console.error(err));
+  }, []);
+
   return (
-    <div className="container orderdetails-page">
+    <div className="container neworders-page mt-5 pt-5 mb-5 pb-5">
 
-      {/* عنوان الصفحة */}
-      <h1 className="page-title cancelled pt-5 pb-3 mt-5 ">
-        تفاصيل الطلب / <span className="neworders"> الطلبات المكتملة</span>
-      </h1>
+      <div className="row">
 
-      {/* زر الطلب */}
-      <div className="buttonn mb-4">
-        <button className="order-btn">الطلب</button>
-      </div>
+        {/* ===== Tabs ===== */}
+        <div className="col-lg-3 d-lg-block pt-5">
+          <div className="orders-right-tabs">
 
-      {/* صندوق معلومات العميل */}
-      <div className="customer-box">
-        <div className="customer-info">
+            <button
+              className="cright-tab"
+              onClick={() => navigate("/seller/sellerconfirmedorders")}
+            >
+              الطلبات الحالية
+            </button>
 
-          <div className="right-side">
-            <div className="icon-and-text">
+            <button className="cright-tab active">
+              الطلبات المكتملة
+            </button>
 
-              <div className="text-side">
-                <h4 className="name text-dark">احمد محمد</h4>
-                <p className="phone">+966 5145125</p>
-                <p className="location">المملكة العربية السعودية، الرياض</p>
-              </div>
+            <button
+              className="cright-tab"
+              onClick={() => navigate("/seller/sellercanceledorders")}
+            >
+              الطلبات الملغية
+            </button>
 
-              <div className="info">
-                <i className="fa-solid fa-user"></i>
-              </div>
-
-            </div>
           </div>
-
-          <div className="left-side-price">
-            100 ر.س
-          </div>
-
         </div>
+
+        {/* ===== Orders Cards ===== */}
+        <div className="col-lg-9 col-12">
+          <div className="cards-wrapper" style={{ marginTop: "97px" }}>
+
+            {orders.length === 0 && (
+              <p className="text-center">لا توجد طلبات مكتملة</p>
+            )}
+
+            {orders.map((order) => (
+              <div
+                key={order.id}
+                className="corder-mobile-card"
+                onClick={() =>
+                  navigate(`/seller/sellershippedordersdetails/${order.id}`)
+                }
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src={order.products?.[0]?.image}
+                  alt=""
+                  className="corder-mobile-img"
+                />
+
+                <div className="order-mobile-content">
+                  <h3 className="corder-mobile-title">
+                    {order.products?.[0]?.name}
+                  </h3>
+
+                  <p className="corder-mobile-desc">
+                    {order.products?.[0]?.description}
+                  </p>
+
+                  <div className="order-bottom-row">
+                    <span className="order-badge">
+                      x{order.products?.[0]?.qty}
+                    </span>
+                    <span className="corder-type">
+                      {order.products?.[0]?.category}
+                    </span>
+                    <span className="confirmorder-price2">
+                      {order.total} ر.س
+                    </span>
+                  </div>
+                </div>
+              </div>
+            ))}
+
+          </div>
+        </div>
+
       </div>
-
-      {/* زر تفاصيل المنتج على اليمين */}
-<div className="buttonn pt-1">
-  <button className="product-btn">تفاصيل المنتج</button>
-</div>
-<div className="product-details-box ">
-
-  <div className="row-line">
-    <span className="label">اسم المنتج</span>
-    <p className="value">سترة شتوية بسعر خاص</p>
-  </div>
-
-  <div className="row-line">
-    <span className="label">الكمية</span>
-    <p className="value">1</p>
-  </div>
-
-  <div className="row-line">
-    <span className="label">السعر</span>
-    <p className="value">100 ر.س</p>
-  </div>
-
-  <div className="row-line">
-    <span className="label">مصاريف الشحن</span>
-    <p className="value">200 ر.س</p>
-  </div>
-
-  <div className="row-line total">
-    <span className="label">الإجمالي</span>
-    <p className="value">1000 ر.س</p>
-  </div>
-
-</div>
-  
- <div className="buttonn mb-3">
-  <button className="product-btn">حالة الطلب</button>
-</div> 
- <div className="confirmed-message text-center pb-5 mb-3 fw-bold">
-    <p>تم اكمال الطلب  </p>
-</div> 
-
     </div>
   );
 }

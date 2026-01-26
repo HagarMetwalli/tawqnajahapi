@@ -797,7 +797,21 @@
     border-radius: 21px;
     background-color: #ff580ede;
 }
+.home-view-btn{
+    padding: 8px 18px;
+    background: #ffffff;
+    border: 1px solid #CBD5E1;
+    border-radius: 25px;
+    font-size: 14px;
+    color: #0A2A57;
+    text-decoration: none;
+    transition: 0.3s;
+    font-weight: 600;
+    align-items: center;
+    margin-left: 0%;
+    height: 39px;
 
+}
 /* ===================== RESPONSIVE DESIGN ===================== */
 
 /* ===================== Responsive Design ===================== */

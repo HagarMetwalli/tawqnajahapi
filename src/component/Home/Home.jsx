@@ -8,8 +8,6 @@ import avatar from "../../assets/rateproduct.png";
 import "./Home.css";
 
 import Categories from "../Categories/Categories";
-import Offerstawqnajah from "../Offerstawqnajah/Offerstawqnajah";
-import OffersTawq from "../OffersTawq/OffersTawq";
 import SuccessPartners from "../SuccessPartners/SuccessPartners";
 
 import { BaseUrl } from "../../App";
@@ -19,44 +17,38 @@ export default function Home() {
   const navigate = useNavigate();
   const { t } = useTranslation();
 
-  /* ========= STATE ========= */
   const [banners, setBanners] = useState([]);
   const [products, setProducts] = useState([]);
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const [current, setCurrent] = useState(0);
   const [loading, setLoading] = useState(true);
-const addToCart = async (productId) => {
-  try {
-    const token = localStorage.getItem("token");
 
-    await axios.post(
-      BaseUrl + BuyerServicesUrl.AddToCart,
-      { product_id: productId },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+  /* ===== ADD TO CART ===== */
+  const addToCart = async (productId) => {
+    try {
+      const token = localStorage.getItem("token");
 
-    // تحديث السلة في Uppernav
-    window.dispatchEvent(new Event("cartUpdated"));
+      await axios.post(
+        BaseUrl + BuyerServicesUrl.AddToCart,
+        { product_id: productId },
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      );
 
-  } catch (err) {
-    console.log(err); // من غير alert
-  }
-};
+      window.dispatchEvent(new Event("cartUpdated"));
+    } catch (err) {
+      console.log(err);
+    }
+  };
 
-
-
-
-  /* ========= CHECK TOKEN ========= */
+  /* ===== CHECK LOGIN ===== */
   useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) navigate("/login");
   }, [navigate]);
 
-  /* ========= GET HOME DATA ========= */
+  /* ===== GET HOME DATA ===== */
   useEffect(() => {
     const fetchHome = async () => {
       try {
@@ -65,13 +57,12 @@ const addToCart = async (productId) => {
         const res = await axios.get(BaseUrl + BuyerServicesUrl.Home, {
           headers: { Authorization: `Bearer ${token}` },
         });
-        console.log(res)
+
         setFeaturedProducts(res.data?.data?.ProductToqTajah || []);
         setProducts(res.data?.data?.products || []);
         setBanners(res.data?.data?.bannars || []);
       } catch (error) {
         if (error.response?.status === 401) navigate("/login");
-
       } finally {
         setLoading(false);
       }
@@ -80,7 +71,7 @@ const addToCart = async (productId) => {
     fetchHome();
   }, [navigate]);
 
-  /* ========= SLIDER ========= */
+  /* ===== SLIDER ===== */
   useEffect(() => {
     if (!banners.length) return;
     const interval = setInterval(
@@ -97,6 +88,25 @@ const addToCart = async (productId) => {
       </div>
     );
   }
+
+  /* ===== IMAGE STYLES (INLINE ONLY) ===== */
+  const imgWrapStyle = {
+    width: "100%",
+    height: "200px",
+    borderRadius: "12px",
+    overflow: "hidden",
+    background: "#f6f6f6",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+  };
+
+  const imgStyle = {
+    width: "100%",
+    height: "100%",
+    objectFit: "cover",
+    display: "block",
+  };
 
   return (
     <div className="hero-wrapper pt-5 mt-4">
@@ -135,7 +145,6 @@ const addToCart = async (productId) => {
             </Link>
           </div>
 
-          {/* ===== RATING ===== */}
           <div className="home-rating">
             <div className="icons-stack">
               <i className="plusicon">+</i>
@@ -155,40 +164,57 @@ const addToCart = async (productId) => {
       {/* ===== CATEGORIES ===== */}
       <Categories />
 
-      {/* ===== FEATURED ===== */}
-      <div className="container mt-5">
-        <h3 className="mb-4 fw-bold">{t("featuredOffers")}</h3>
+      {/* ===== FEATURED OFFERS ===== */}
+      <div className="container">
+        <div className="homeheader d-flex justify-content-between mb-2">
+          <h3 className="fw-bold">{t("featuredOffers")}</h3>
+          <Link className="home-view-btn" to="/offers">
+            رؤية المزيد
+          </Link>
+        </div>
+
         <div className="row">
           {featuredProducts.map((item) => (
             <div className="col-md-3 col-sm-6 mb-4" key={item.id}>
               <div className="product-card">
-                <img
-                  src={item.image?.[0] || "/placeholder.png"}
-                  alt={item.name}
-                  className="product-img"
-                  onError={(e) => (e.target.src = "/placeholder.png")}
-                />
-                <h6 className="mt-3">{item.name}</h6>
-                <p className="desc">
-                  {item.description?.split(" ").slice(0, 3).join(" ")}
-                </p>
-                <p className="price">
-                  {(item.priceAfterDiscount > 0
-                    ? item.priceAfterDiscount
-                    : item.price) +
-                    " " +
-                    item.currency_type}
-                </p>
-                {/* <button className="addcart text-white border-0">
-                  {t("addToCart")}
-                </button> */}
-                <button
-  className="addcart text-white border-0"
-  onClick={() => addToCart(item.id)}
->
-  {t("addToCart")}
-</button>
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigate(`/advertisementdetails/${item.id}`)
+                  }
+                >
+                  <div style={imgWrapStyle}>
+                    <img
+                      src={item.image?.[0] || ""}
+                      alt={item.name}
+                      className="product-img"
+                      style={imgStyle}
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                  </div>
 
+                  <h6 className="mt-3">{item.name}</h6>
+                  <p className="desc">
+                    {item.description?.split(" ").slice(0, 3).join(" ")}
+                  </p>
+                  <p className="price">
+                    {(item.priceAfterDiscount > 0
+                      ? item.priceAfterDiscount
+                      : item.price) +
+                      " " +
+                      item.currency_type}
+                  </p>
+                </div>
+
+                <button
+                  className="addcart text-white border-0 pt-2 pb-2"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    addToCart(item.id);
+                  }}
+                >
+                  {t("addToCart")}
+                </button>
               </div>
             </div>
           ))}
@@ -197,29 +223,44 @@ const addToCart = async (productId) => {
 
       {/* ===== SUGGESTIONS ===== */}
       <div className="container mt-5">
-        <h3 className="mb-4 fw-bold">{t("suggestions")}</h3>
+        <div className="homeheader d-flex justify-content-between">
+          <h3 className="mb-4 fw-bold">{t("suggestions")}</h3>
+        </div>
+
         <div className="row">
           {products.map((item) => (
             <div className="col-md-3 col-sm-6 mb-4" key={item.id}>
               <div className="product-card">
-                <img
-                  src={item.image?.[0] || "/placeholder.png"}
-                  alt={item.name}
-                  className="product-img"
-                  onError={(e) => (e.target.src = "/placeholder.png")}
-                />
-                <h6 className="mt-3">{item.name}</h6>
-                <p className="desc">
-                  {item.description?.split(" ").slice(0, 3).join(" ")}
-                </p>
-                <p className="price">
-                  {(item.priceAfterDiscount > 0
-                    ? item.priceAfterDiscount
-                    : item.price) +
-                    " " +
-                    item.currency_type}
-                </p>
-                <button className="addcart text-white border-0">
+                <div
+                  style={{ cursor: "pointer" }}
+                  onClick={() =>
+                    navigate(`/advertisementdetails/${item.id}`)
+                  }
+                >
+                  <div style={imgWrapStyle}>
+                    <img
+                      src={item.image?.[0] || ""}
+                      alt={item.name}
+                      className="product-img"
+                      style={imgStyle}
+                      onError={(e) => (e.target.style.display = "none")}
+                    />
+                  </div>
+
+                  <h6 className="mt-3">{item.name}</h6>
+                  <p className="desc">
+                    {item.description?.split(" ").slice(0, 3).join(" ")}
+                  </p>
+                  <p className="price">
+                    {(item.priceAfterDiscount > 0
+                      ? item.priceAfterDiscount
+                      : item.price) +
+                      " " +
+                      item.currency_type}
+                  </p>
+                </div>
+
+                <button className="addcart text-white border-0 pt-2 pb-2">
                   {t("addToCart")}
                 </button>
               </div>

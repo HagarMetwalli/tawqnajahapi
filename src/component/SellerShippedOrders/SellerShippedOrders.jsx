@@ -1,97 +1,110 @@
-import React from 'react'
-import '../SellerShippedOrders/SellerShippedOrders.css'
-import img from "../../assets/winter-shirt.jpg";
+import React, { useEffect, useState } from "react";
+import "../SellerShippedOrders/SellerShippedOrders.css";
 import { useNavigate, useLocation } from "react-router-dom";
+import axios from "axios";
+import { BaseUrl } from "../../App";
+import SellerServicesUrl from "../../SellerServicesUrl";
 
 export default function SellerShippedOrders() {
-
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
   const location = useLocation();
 
-  const orders = [
-    {
-      id: 1,
-      title: "جاكيت شتوي",
-      desc: "جاكيت أبيض - تخفيض خاص",
-      category: "ملابس",
-      qty: 1,
-      price: "149.99 ر.س",
-      img: img,
-    },
-  ];
+  const [orders, setOrders] = useState([]);
+  const token = localStorage.getItem("token");
 
-  const goToDetails = (id) => {
-    navigate(`/seller/sellershippedordersdetails`);
-  };
+  useEffect(() => {
+    axios
+      .get(`${BaseUrl}${SellerServicesUrl.MyOrders}?status=completed`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        setOrders(res.data.data || []);
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="container neworders-page mt-5 pt-5 mb-5 pb-5">
 
       <div className="row">
 
-        {/* ====== الجزء اليمين (التابات) ====== */}
-        <div className="col-lg-3  d-lg-block pt-5 ">
-          <div className="orders-right-tabs ">
-            
-           <button
-                className={`cright-tab cright-btn ${
-                  location.pathname === "/seller/sellerconfirmedorders" ? "active" : ""
-                }`}
-                onClick={() => navigate("/seller/sellerconfirmedorders")}
-              >
-                الطلبات الحالية
-              </button>
+        {/* ===== Tabs ===== */}
+        <div className="col-lg-3 d-lg-block pt-5">
+          <div className="orders-right-tabs">
 
-              <button
-                className={`cright-tab cright-btn2 ${
-                  location.pathname === "/seller/sellershippedorders" ? "active" : ""
-                }`}
-                onClick={() => navigate("/seller/sellershippedorders")}
-              >
-                الطلبات المكتملة
-              </button>
+            <button
+              className="cright-tab"
+              onClick={() => navigate("/seller/sellerconfirmedorders")}
+            >
+              الطلبات الحالية
+            </button>
 
-              <button
-                className={`cright-tab cright-btn3 ${
-                  location.pathname === "/seller/sellercanceledorders" ? "" : ""
-                }`}
-                onClick={() => navigate("/seller/sellercanceledorders")}
-              >
-                الطلبات الملغية
-              </button>
+            <button className="cright-tab active">
+              الطلبات المكتملة
+            </button>
+
+            <button
+              className="cright-tab"
+              onClick={() => navigate("/seller/sellercanceledorders")}
+            >
+              الطلبات الملغية
+            </button>
 
           </div>
         </div>
 
-        {/* ====== الجزء الشمال (الكروت) ====== */}
-             <div className="col-lg-9 col-12 justify-content-start">
-            <div className="cards-wrapper" style={{marginTop:"97px"}}>
-              {orders.map((order) => (
-                <div key={order.id} className="corder-mobile-card"
-                onClick={() => goToDetails(order.id)}
-  style={{ cursor: "pointer" }}>
-                  <img
-                    src={order.img}
-                    alt={order.title}
-                    className="corder-mobile-img"
-                  />
+        {/* ===== Orders Cards ===== */}
+        <div className="col-lg-9 col-12">
+          <div className="cards-wrapper" style={{ marginTop: "97px" }}>
 
-                  <div className="order-mobile-content">
-                    <h3 className="corder-mobile-title">{order.title}</h3>
-                    <p className="corder-mobile-desc">{order.desc}</p>
+            {orders.length === 0 && (
+              <p className="text-center">لا توجد طلبات مكتملة</p>
+            )}
 
-                    <div className="order-bottom-row">
-                      <span className="order-badge">x{order.qty}</span>
-                      <span className="corder-type">ملابس</span>
-                      <span className="confirmorder-price2">
-                        {order.price} 
-                      </span>
-                    </div>
+            {orders.map((order) => (
+              <div
+                key={order.id}
+                className="corder-mobile-card"
+                onClick={() =>
+                  navigate(`/seller/sellershippedordersdetails/${order.id}`)
+                }
+                style={{ cursor: "pointer" }}
+              >
+                <img
+                  src={order.products?.[0]?.image}
+                  alt=""
+                  className="corder-mobile-img"
+                />
+
+                <div className="order-mobile-content">
+                  <h3 className="corder-mobile-title">
+                    {order.products?.[0]?.name}
+                  </h3>
+
+                  <p className="corder-mobile-desc">
+                    {order.products?.[0]?.description}
+                  </p>
+
+                  <div className="order-bottom-row">
+                    <span className="order-badge">
+                      x{order.products?.[0]?.qty}
+                    </span>
+                    <span className="corder-type">
+                      {order.products?.[0]?.category}
+                    </span>
+                    <span className="confirmorder-price2">
+                      {order.total} ر.س
+                    </span>
                   </div>
                 </div>
-              ))}
-            </div>
+              </div>
+            ))}
+
           </div>
+        </div>
 
       </div>
     </div>

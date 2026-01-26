@@ -19,13 +19,20 @@
 }
 
 /* ---------- Header ---------- */
-.related-header {
+/* .related-header {
 display: flex;
     justify-content: space-between;
     align-items: center;
     margin-bottom: 32px;
     width: 100%;
     direction: rtl;             
+} */
+.related-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 32px;
+  width: 100%;
+  direction: rtl;
 }
 
 .related-title {

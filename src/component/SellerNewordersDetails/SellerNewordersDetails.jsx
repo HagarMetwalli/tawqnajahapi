@@ -1,103 +1,83 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import "./SellerNewordersDetails.css";
-import confirmcheck from '../../assets/confirmation.png';
-import ordercheck from '../../assets/order2.png';
-import delivered from '../../assets/delivered.png';
+import { BaseUrl } from "../../App";
 
 export default function SellerOrderDetails() {
-  return (
-    <div className="container orderdetails-page newordersdetails1 pb-5 mt-5 pt-5">
+  const { id } = useParams();
+  const [order, setOrder] = useState(null);
+  const token = localStorage.getItem("seller_token");
 
-      {/* عنوان الصفحة */}
-      <h1 className="page-titleneworders mt-5 pt-5  pb-3">
-        تفاصيل الطلب / <span className="newordersdetails">الطلبات الجديدة</span>
+  useEffect(() => {
+    axios
+      .get(`${BaseUrl}user/my-order/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        setOrder(res.data.data);
+      })
+      .catch((err) => console.log(err));
+  }, [id]);
+
+  if (!order) return <p>جاري تحميل الطلب...</p>;
+
+  return (
+    <div className="container orderdetails-page mt-5 pt-5">
+      <h1 className="page-titleneworders">
+        تفاصيل الطلب / <span>الطلبات الجديدة</span>
       </h1>
 
-      {/* زر الطلب */}
-      <div className="buttonn mb-4">
-        <button className="order-btn">الطلب</button>
-      </div>
-
-      {/* صندوق معلومات العميل */}
+      {/* بيانات العميل */}
       <div className="customer-box">
         <div className="customer-info">
+          <div>
+            <h4>{order.user.name}</h4>
+            <p>{order.user.phone}</p>
+            <p>{order.user.city}</p>
+          </div>
+          <div className="left-side-price">
+            {order.total} ر.س
+          </div>
+        </div>
+      </div>
 
-          <div className="right-side">
-            <div className="icon-and-text">
+      {/* المنتجات */}
+      <div className="product-details-box">
+        {order.products.map((p) => (
+          <div key={p.id}>
+            <div className="row-line">
+              <span>اسم المنتج</span>
+              <p>{p.name}</p>
+            </div>
 
-              <div className="text-side">
-                <h4 className="name text-dark">احمد محمد</h4>
-                <p className="phone">+966 5145125</p>
-                <p className="location">المملكة العربية السعودية، الرياض</p>
-              </div>
+            <div className="row-line">
+              <span>الكمية</span>
+              <p>{p.quantity}</p>
+            </div>
 
-              <div className="info">
-                <i className="fa-solid fa-user"></i>
-              </div>
-
+            <div className="row-line">
+              <span>السعر</span>
+              <p>{p.price} ر.س</p>
             </div>
           </div>
+        ))}
 
-          <div className="left-side-price">
-            100 ر.س
-          </div>
-
-        </div>
-      </div>
-
-      {/* زر تفاصيل المنتج */}
-      <div className="buttonn pt-1">
-        {/* <button className="product-btn">تفاصيل المنتج</button> */}
-      </div>
-
-      <div className="product-details-box">
-        <div className="row-line">
-          <span className="label">اسم المنتج</span>
-          <p className="value">سترة شتوية بسعر خاص</p>
-        </div>
-        <div className="row-line">
-          <span className="label">الكمية</span>
-          <p className="value">1</p>
-        </div>
-        <div className="row-line">
-          <span className="label">السعر</span>
-          <p className="value">100 ر.س</p>
-        </div>
-        <div className="row-line">
-          <span className="label">مصاريف الشحن</span>
-          <p className="value">200 ر.س</p>
-        </div>
         <div className="row-line total">
-          <span className="label">الإجمالي</span>
-          <p className="newordervalue">1000 ر.س</p>
+          <span>الإجمالي</span>
+          <p className="newordervalue">{order.total} ر.س</p>
         </div>
       </div>
 
-      {/* زر حالة الطلب */}
-      {/* <div className="buttonn">
-        <button className="product-btncase">حالة الطلب</button>
-      </div> */}
-
-      {/* قسم الحالة */}
-    {/* قسم حالة الطلب */}
-<div className="order-status-box">
-
-
-  <div className="status-card">
-      <h3 className="status-title">حالة الطلب</h3>
-
-    <p className="status-text">
-      بتأكيدك للطلب سيتم إخطار العميل مباشرة
-    </p>
-  </div>
-
-  <button className="confirm-order-btn mb-5 mt-3">
-    تأكيد الطلب
-  </button>
-
-</div>
-
-
+      {/* تأكيد الطلب */}
+      <div className="order-status-box">
+        <button className="confirm-order-btn">
+          تأكيد الطلب
+        </button>
+      </div>
     </div>
   );
 }

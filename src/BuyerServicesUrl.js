@@ -14,7 +14,7 @@ const BuyerServicesUrl = {
 
   //Product
   GetProductList: "user/products?type=normal",
-  GetProductById: "/user/products/{id}",
+  GetProductById: "user/products/{id}",
   // Marketing ✅
   Marketing: "user/marketing",
   // Support

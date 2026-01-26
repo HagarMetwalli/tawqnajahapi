@@ -151,6 +151,7 @@ import PrivateRoute from './component/PrivateRoue';
 import Otp from './component/Otp/Otp';
 import SellerOtp from './component/SellerOtp/SellerOtp';
 import Cart from './component/Cart/Cart';
+import SellerRelatedProductsWrapper from './component/SellerRelatedProductsWrapper/SellerRelatedProductsWrapper';
 export const BaseUrl = "https://toknagah.viking-iceland.online/api/";
 const router = createHashRouter([
   {
@@ -170,7 +171,7 @@ const router = createHashRouter([
 { path: 'forgetpassword', element: <ForgetPassword /> },
 { path: 'resetpassword', element: <ResetPassword /> },
 { path: 'register', element: <Register /> },
-{ path: '/accounttype', element: <AccountType /> },
+{ path: 'accounttype', element: <AccountType /> },
 { path: 'admin', element: <Admin /> },
 { path: 'services', element: <Services /> },
 { path: 'relatedproducts', element: <RelatedProducts /> },
@@ -186,7 +187,7 @@ const router = createHashRouter([
 { path: 'addadvertisement', element: <AddAdvertisement /> },
 { path: 'financialreports', element: <FinancialReports /> },
 { path: 'mysecondstore', element: <MysecodStore /> },
-{ path: 'advertisementdetails', element: <AddverisementDetails /> },
+{ path: '/advertisementdetails/:id', element: <AddverisementDetails /> },
 { path: 'myorders', element: <MyOrders /> },
 { path: 'confirmedorders', element: <ConfirmedOrders /> },
 {path:'confirmordersdetails',element:<ConfirmOrderDetails/>},
@@ -276,6 +277,7 @@ const router = createHashRouter([
       { path: '/seller/sellerselleradmin', element: <SellerAdmin /> },
       { path: '/seller/sellerservices', element: <SellerServices /> },
       { path: '/seller/sellerrelatedproducts', element: <SellerRelatedProducts /> },
+      {path:'/seller/SellerRelatedProductsWrapper',element:<SellerRelatedProductsWrapper/>},
       { path: '/seller/sellerrelatedactivites', element: <SellerRelatedActivites /> },
       { path: '/seller/sellersidebarfilters', element: <SellerSidebarFilters /> },
       { path: '/seller/sellerproductlist', element: <SellerProductList /> },

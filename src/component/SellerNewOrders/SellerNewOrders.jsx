@@ -1,66 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "./SellerNewOrders.css";
-import img from "../../assets/winter-shirt.jpg";
+import { BaseUrl } from "../../App";
 
 export default function SellerNewOrders() {
-  const orders = [
-    {
-      id: 1,
-      title: "جاكيت شتوي",
-      desc: "جاكيت أبيض - تخفيض خاص",
-      category: "ملابس",
-      qty: 1,
-      price: "149.99 ر.س",
-      img: img,
-    },
-    {
-      id: 2,
-      title: "جاكيت شتوي",
-      desc: "جاكيت أبيض - تخفيض خاص",
-      category: "ملابس",
-      qty: 1,
-      price: "149.99 ر.س",
-      img: img,
-    },
-  ];
+  const [orders, setOrders] = useState([]);
+  const token = localStorage.getItem("seller_token");
+
+  useEffect(() => {
+    axios
+      .get(`${BaseUrl}user/my-order?status=pending`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      })
+      .then((res) => {
+        setOrders(res.data.data || []);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
-    <div className="container neworders-page neworderspage  mt-5 pt-5"  >
-
+    <div className="container neworders-page mt-5 pt-5">
       <h1 className="heading pt-5 mt-5 pe-5">
         الطلبات الجديدة / <span className="main">الرئيسية</span>
       </h1>
 
       <div className="orders-wrapper pb-5 mb-4">
         {orders.map((order) => (
-          <Link to="/seller/sellernewordersdetails" key={order.id} className="order-card-link">
-            <div className="order-cardnorders  ">
+          <Link
+            key={order.id}
+            to={`/seller/order-details/${order.id}`}
+            className="order-card-link"
+          >
+            <div className="order-cardnorders">
+              <p className="neworder-price-left">
+                {order.total} ر.س
+              </p>
 
-              <p className="neworder-price-left">{order.price}</p>
-
-              <div className="neworder-content ">
+              <div className="neworder-content">
                 <div className="image-side">
-                  <img src={order.img} alt="product" />
+                  <img src={order.products[0]?.image} alt="" />
 
                   <div className="text-sideneworder">
-                    <h4 className="product-title">{order.title}</h4>
-                    <p className="product-descnorders">{order.desc}</p>
+                    <h4 className="product-title">
+                      {order.products[0]?.name}
+                    </h4>
+
+                    <p className="product-descnorders">
+                      {order.products[0]?.description}
+                    </p>
 
                     <p className="category">
-                      <span className="qty">x{order.qty}</span>
-                      <span className="typenorders">{order.category}</span>
+                      <span className="qty">
+                        x{order.products[0]?.quantity}
+                      </span>
+                      <span className="typenorders">
+                        {order.products[0]?.category}
+                      </span>
                     </p>
                   </div>
-
                 </div>
               </div>
-
             </div>
           </Link>
         ))}
       </div>
-
     </div>
   );
 }

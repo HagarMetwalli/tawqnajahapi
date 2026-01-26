@@ -6,7 +6,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 import { BaseUrl } from "../../App";
-import BuyerServicesUrl from "../../BuyerServicesUrl";
+import SellerServicesUrl from "../../SellerServicesUrl";
 
 export default function SellerLogin() {
   const navigate = useNavigate();
@@ -35,16 +35,21 @@ export default function SellerLogin() {
       setLoading(true);
 
       const response = await axios.post(
-        BaseUrl + BuyerServicesUrl.Login,
+        BaseUrl + SellerServicesUrl.SellerLogin,
         { email, password }
       );
 
       const { token, user } = response.data.data; // <-- matches your API
 
       // Store token & user
-      localStorage.setItem("token", token);
-      localStorage.setItem("user", JSON.stringify(user));
-      localStorage.setItem("isLoggedIn", "true");
+localStorage.removeItem("token");
+localStorage.removeItem("user");
+localStorage.removeItem("isLoggedIn");
+
+localStorage.setItem("seller_token", token);
+localStorage.setItem("seller_user", JSON.stringify(user));
+localStorage.setItem("sellerLoggedIn", "true");
+localStorage.setItem("accountType", "seller");
 
       navigate("/seller/sellerhome");
     } catch (error) {

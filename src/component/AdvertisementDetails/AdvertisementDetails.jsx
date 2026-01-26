@@ -1,111 +1,122 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 import "../AdvertisementDetails/AdvertisementDetails.css";
 
-import salefriday from "../../assets/bag.jpg";
-import img2 from "../../assets/key.jpg";
-import img3 from "../../assets/winter-shirt.jpg";
 import rating from "../../assets/Star.png";
 import installement from "../../assets/installement.png";
 import international from "../../assets/international.png";
-import Lstore from "../../assets/lorfi-store.jpg";
 import productrating from "../../assets/product-rating.png";
 import insta from "../../assets/insta.png";
 import whatsapp from "../../assets/whatsapp.png";
 import facebook from "../../assets/facebook.png";
 
-export default function AdvertisementDetails() {
-  // صور السلايدر
-  const images = [salefriday, salefriday, salefriday];
+import { BaseUrl } from "../../App";
 
+export default function AdvertisementDetails() {
+  const { id } = useParams();
+  const [ad, setAd] = useState(null);
   const [currentIndex, setCurrentIndex] = useState(0);
 
-  const nextSlide = () => {
-    setCurrentIndex((prev) => (prev + 1) % images.length);
-  };
+ useEffect(() => {
+  const token = localStorage.getItem("token");
 
-  const prevSlide = () => {
-    setCurrentIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
-  };
+  axios
+    .get(`${BaseUrl}user/products/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    .then((res) => {
+      setAd(res.data.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}, [id]);
+
+  if (!ad) {
+    return (
+      <div className="text-center mt-5 pt-5">
+        <h4>Loading...</h4>
+      </div>
+    );
+  }
+
+  const images = ad.image?.length ? ad.image : [];
 
   return (
-    <div className="dproduct-page mb-5 pb-5  container c">
-      {/* العنوان */}
+    <div className="dproduct-page mb-5 pb-5 container c">
+      {/* ===== TITLE ===== */}
       <h1 className="product-heading dproduct-heading2">
-       تفاصيل الإعلان /  <span className="comm ">ذات صلة</span>
+        تفاصيل الإعلان / <span className="comm">ذات صلة</span>
       </h1>
 
       <div className="product-wrapper col-md-6">
-        {/* السلايدر */}
-        <div className="dproduct-image-box ">
-          <img
-            src={images[currentIndex]}
-            alt="product"
-            className="main-image2"
-          />
-          {/* <button className="slide-btn right" onClick={prevSlide}>
-            <i className="fa-solid fa-chevron-left"></i>
-          </button> */}
-          {/* <button className="slide-btn left" onClick={nextSlide}>
-            <i className="fa-solid fa-chevron-right"></i>
-          </button> */}
-
-          {/* زر الشمال */}
+        {/* ===== IMAGE ===== */}
+        <div className="dproduct-image-box">
+          {images.length > 0 ? (
+            <img
+              src={images[currentIndex]}
+              alt={ad.name}
+              className="main-image2"
+            />
+          ) : (
+            <div className="main-image2 d-flex align-items-center justify-content-center">
+              لا توجد صورة
+            </div>
+          )}
         </div>
 
-        {/* معلومات المنتج */}
+        {/* ===== INFO ===== */}
         <div className="product-info col-md-6">
           <div className="dtitle-rating-row">
-            <h2 className="dproduct-title">
-           شنطة سوداء
-              </h2>
+            <h2 className="dproduct-title">{ad.name}</h2>
 
-            <div className="drating-row  ">
-              <img src={rating} />
+            <div className="drating-row">
+              <img src={rating} alt="" />
               <span className="drate-number">4.9</span>
             </div>
           </div>
-          <p className="product-desc2 ">عروض جديدة في الجمعة السوداء</p>
+
+          <p className="product-desc2">{ad.description}</p>
+
           <div className="dprice-row">
-            <span className="dcurrent-price">250 ر.س</span>
-            <span className="dold-price">550 ر.س</span>
-            <span className="ddiscount">20%</span>
+            <span className="dcurrent-price">
+              {ad.priceAfterDiscount} ر.س
+            </span>
+            <span className="dold-price">{ad.price} ر.س</span>
+            <span className="ddiscount">{ad.discount}%</span>
           </div>
         </div>
       </div>
 
-      <div className="big-cart d-flex align-items-center ">
-        <div className="first-cart ">
-          <img src={installement} alt="cart" />
-          <span className="text-white d-block"> شحن دولي وداخلي</span>
+      {/* ===== SHIPPING / INSTALLMENT ===== */}
+      <div className="big-cart d-flex align-items-center">
+        <div className="first-cart">
+          <img src={international} alt="" />
+          <span className="text-white d-block">شحن دولي وداخلي</span>
         </div>
+
         <div className="second-cart">
-          <img src={international} alt="cart" />
-          <span className="text-white d-block"> تقسيط</span>
+          <img src={installement} alt="" />
+          <span className="text-white d-block">تقسيط</span>
         </div>
       </div>
 
-      {/* <div className="daction  d-flex justify-content-center">
-        <div className="dinstallement ">
-          <img src={installement} className="image" />
-          <h4 className=" text-white">شحن دولي وداخلي</h4>
-        </div>
-        <div className="dinternational ">
-          <img src={international} />
-          <h4 className=" text-white">تقسيط</h4>
-        </div>
-      </div> */}
-      {/* قسم المشاركة */}
-
-      {/* كارت المتجر */}
+      {/* ===== STORE CARD ===== */}
       <div className="product-bottom-box mt-5 mb-5">
         <div className="seller-box mt-4">
-          {/* المعلومات والصورة */}
           <div className="seller-info-wrap">
-            <img src={Lstore} className="seller-img" alt="seller" />
+            <img
+              src={ad.store_image || "/placeholder.jpg"}
+              className="seller-img"
+              alt="seller"
+            />
 
             <div className="d-flex flex-column w-100">
               <div className="seller-info mb-2">
-                <h4 className="seller-name">متجر لورفي</h4>
+                <h4 className="seller-name">{ad.store_name || "المتجر"}</h4>
                 <div className="share-icons socialicons2">
                   <img src={facebook} />
                   <img src={whatsapp} />
@@ -113,25 +124,21 @@ export default function AdvertisementDetails() {
                 </div>
               </div>
               <p className="seller-location text-end">
-                الرياض، المملكة العربية السعودية
+                {ad.city || "—"}
               </p>
             </div>
           </div>
-
-          {/* الأيقونات */}
         </div>
 
         <hr className="divider" />
 
-        {/* قسم التقييم */}
+        {/* ===== RATE ===== */}
         <h3 className="rate-title">تقييمك للمنتج</h3>
 
         <div className="stars">
-          <img src={productrating} />
-          <img src={productrating} />
-          <img src={productrating} />
-          <img src={productrating} />
-          <img src={productrating} />
+          {[1, 2, 3, 4, 5].map((i) => (
+            <img key={i} src={productrating} />
+          ))}
         </div>
       </div>
     </div>

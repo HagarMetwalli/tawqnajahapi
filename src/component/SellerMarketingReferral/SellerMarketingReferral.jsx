@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "./SellerMarketingReferral.css";
+
 import giftImg from "../../assets/gift.png";
 import phoneIcon from "../../assets/phoneicon.png";
 
@@ -10,40 +11,87 @@ import marketingimg from "../../assets/m-img.png";
 import survimg from "../../assets/surv-img.png";
 import logoutimg from "../../assets/logout-img.png";
 
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BaseUrl } from "../../App";
-import BuyerServicesUrl from "../../BuyerServicesUrl";
+import SellerServicesUrl from "../../SellerServicesUrl";
 
 export default function SellerMarketingReferral() {
-  const token = localStorage.getItem("token");
+  const navigate = useNavigate();
+
+  // ✅ seller token ONLY
+  // const token = localStorage.getItem("seller_token");
+  // const token =localStorage.getItem("token") || localStorage.getItem("seller_token");
+const token = localStorage.getItem("token");
+
 
   const [code, setCode] = useState("");
   const [count, setCount] = useState(0);
   const [amount, setAmount] = useState("0.00");
   const [loading, setLoading] = useState(false);
+  const [copyMsg, setCopyMsg] = useState("");
+
+  /* ===== GUARD ===== */
+  useEffect(() => {
+    if (!token) {
+      navigate("/accounttype");
+    }
+  }, [token, navigate]);
 
   /* ===== GET MARKETING DATA ===== */
   useEffect(() => {
+    if (!token || token === "undefined" || token === "null") return;
+
     setLoading(true);
 
-    axios
-      .get(BaseUrl + BuyerServicesUrl.GetMarketingData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
+axios
+  .get(BaseUrl + SellerServicesUrl.GetMarketingData, {
+    headers: {
+      Accept: "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+
       .then((res) => {
-        const data = res.data.data;
-        setCode(data.code);
-        setCount(data.count);
-        setAmount(data.amount);
+        const data = res.data?.data || {};
+        setCode(data.code ?? "");
+        setCount(data.count ?? 0);
+        setAmount(data.amount ?? "0.00");
       })
       .catch((err) => {
         console.log("GET MARKETING DATA ERROR", err);
+
+        // unauthorized → logout seller
+        if (err.response?.status === 401) {
+          localStorage.removeItem("seller_token");
+          localStorage.removeItem("seller_user");
+          localStorage.removeItem("sellerLoggedIn");
+          navigate("/accounttype");
+        }
       })
       .finally(() => setLoading(false));
-  }, [token]);
- 
+  }, [token, navigate]);
+
+  /* ===== COPY CODE ===== */
+  const handleCopy = async () => {
+    if (!code) return;
+    try {
+      await navigator.clipboard.writeText(code);
+      setCopyMsg("تم نسخ الكود ✅");
+      setTimeout(() => setCopyMsg(""), 1500);
+    } catch {
+      setCopyMsg("لم يتم النسخ ❌");
+      setTimeout(() => setCopyMsg(""), 1500);
+    }
+  };
+
+  /* ===== LOGOUT SELLER ===== */
+  const handleLogout = () => {
+    localStorage.removeItem("seller_token");
+    localStorage.removeItem("seller_user");
+    localStorage.removeItem("sellerLoggedIn");
+    navigate("/accounttype");
+  };
+
   return (
     <div className="marketing-wrapper container mt-5 pt-5">
       {/* ===== SIDEBAR ===== */}
@@ -88,11 +136,9 @@ export default function SellerMarketingReferral() {
           </Link>
         </button>
 
-        <button className="side-btn2 logout">
-          <Link to="/accounttype" className="text-white text-decoration-none">
-            <img className="ps-3" src={logoutimg} alt="" />
-            تسجيل الخروج
-          </Link>
+        <button className="side-btn2 logout" onClick={handleLogout}>
+          <img className="ps-3" src={logoutimg} alt="" />
+          تسجيل الخروج
         </button>
       </div>
 
@@ -115,12 +161,20 @@ export default function SellerMarketingReferral() {
         ) : (
           <>
             {/* ===== CODE ===== */}
-            <div className="info-box">
+            <div
+              className="info-box"
+              style={{ cursor: "pointer" }}
+              onClick={handleCopy}
+            >
               <span className="info-icon">
                 <img src={phoneIcon} alt="" />
               </span>
-              <span className="info-text">{code}</span>
+              <span className="info-text">
+                {code || "لا يوجد كود بعد"}
+              </span>
             </div>
+
+            {copyMsg && <p style={{ marginTop: 8 }}>{copyMsg}</p>}
 
             {/* ===== COUNT ===== */}
             <div className="info-box">
@@ -138,7 +192,9 @@ export default function SellerMarketingReferral() {
           </>
         )}
 
-        <button className="withdraw-btn">سحب الأرباح</button>
+        <button className="withdraw-btn" disabled={amount === "0.00"}>
+          سحب الأرباح
+        </button>
       </div>
     </div>
   );

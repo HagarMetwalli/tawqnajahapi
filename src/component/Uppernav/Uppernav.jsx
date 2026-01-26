@@ -13,39 +13,47 @@ export default function Uppernav() {
 
   const navigate = useNavigate();
   const { t } = useTranslation();
-  const token = localStorage.getItem("token");
 
-  /* ===== GET CART COUNT ===== */
+  /* ===================== CART COUNT ===================== */
   useEffect(() => {
-    if (!token) return;
+    const token = localStorage.getItem("token");
 
- const fetchCartCount = async () => {
-  try {
-    const res = await axios.get(`${BaseUrl}user/show-my-cart`, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    // 🛑 Guard قوي – يمنع أي request غلط
+    if (!token || token === "undefined" || token === "null") {
+      setCartCount(0);
+      return;
+    }
 
-    const items = res.data.data?.items || [];
-    const totalQty = items.reduce(
-      (sum, item) => sum + item.quantity,
-      0
-    );
+    const fetchCartCount = async () => {
+      try {
+        const res = await axios.get(`${BaseUrl}user/show-my-cart`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+            Accept: "application/json",
+          },
+        });
 
-    setCartCount(totalQty);
+        const items = res.data?.data?.items || [];
+        const totalQty = items.reduce(
+          (sum, item) => sum + Number(item.quantity || 0),
+          0
+        );
 
-  } catch {
-    setCartCount(0);
-  }
-};
-
+        setCartCount(totalQty);
+      } catch (err) {
+        // لو حصل أي error (401 / 404) صفر العداد
+        setCartCount(0);
+      }
+    };
 
     fetchCartCount();
 
     window.addEventListener("cartUpdated", fetchCartCount);
     return () =>
       window.removeEventListener("cartUpdated", fetchCartCount);
-  }, [token]);
+  }, []);
 
+  /* ===================== LANGUAGE ===================== */
   const toggleLang = () => {
     const newLang = i18n.language === "ar" ? "en" : "ar";
     i18n.changeLanguage(newLang);
@@ -53,9 +61,11 @@ export default function Uppernav() {
     document.documentElement.dir = newLang === "ar" ? "rtl" : "ltr";
   };
 
+  /* ===================== LOGOUT ===================== */
   const handleLogout = () => {
-    localStorage.clear();
-    navigate("/login");
+    localStorage.removeItem("token"); // 👈 نمسح التوكن بس
+    setCartCount(0);
+    navigate("/seller/sellerlogin");
   };
 
   return (
