@@ -4,8 +4,7 @@ import { Navigation } from "swiper/modules";
 
 import "swiper/css";
 import "swiper/css/navigation";
-
-export default function Slider({ items = [] }) {
+export default function Slider({ items = [], onItemClick }) {
   return (
     <div className="categories-slider-wrapper">
       <Swiper
@@ -18,17 +17,14 @@ export default function Slider({ items = [] }) {
           1024: { slidesPerView: 4 },
         }}
       >
-        {items.map((cat) => (
+        {items.map((cat, index) => (
           <SwiperSlide key={cat.id}>
-            <div className="customer-category-box">
-
-              {/* ✅ Font Awesome icon */}
+            <div
+              className="customer-category-box cursor-pointer"
+              onClick={() => onItemClick(index)} // ✅ here
+            >
               <i className={`fa-solid ${cat.icon} category-icon`}></i>
-
-              <p className="customer-category-name">
-                {cat.name}
-              </p>
-
+              <p className="customer-category-name">{cat.name}</p>
             </div>
           </SwiperSlide>
         ))}
@@ -36,3 +32,4 @@ export default function Slider({ items = [] }) {
     </div>
   );
 }
+

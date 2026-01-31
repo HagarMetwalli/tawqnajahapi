@@ -12,6 +12,7 @@ import SuccessPartners from "../SuccessPartners/SuccessPartners";
 
 import { BaseUrl } from "../../App";
 import BuyerServicesUrl from "../../BuyerServicesUrl";
+import { fetchHomeData } from "../../services/home.service";
 
 export default function Home() {
   const navigate = useNavigate();
@@ -27,13 +28,10 @@ export default function Home() {
   const addToCart = async (productId) => {
     try {
       const token = localStorage.getItem("token");
-
       await axios.post(
         BaseUrl + BuyerServicesUrl.AddToCart,
         { product_id: productId },
-        {
-          headers: { Authorization: `Bearer ${token}` },
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
 
       window.dispatchEvent(new Event("cartUpdated"));
@@ -51,18 +49,17 @@ export default function Home() {
   /* ===== GET HOME DATA ===== */
   useEffect(() => {
     const fetchHome = async () => {
-      try {
+      try 
+      {
         const token = localStorage.getItem("token");
+        const { banners, featuredProducts, products } = await fetchHomeData(token);
 
-        const res = await axios.get(BaseUrl + BuyerServicesUrl.Home, {
-          headers: { Authorization: `Bearer ${token}` },
-        });
-
-        setFeaturedProducts(res.data?.data?.ProductToqTajah || []);
-        setProducts(res.data?.data?.products || []);
-        setBanners(res.data?.data?.bannars || []);
+        setBanners(banners);
+        setFeaturedProducts(featuredProducts);
+        setProducts(products);
       } catch (error) {
         if (error.response?.status === 401) navigate("/login");
+        console.error(error);
       } finally {
         setLoading(false);
       }
@@ -74,10 +71,7 @@ export default function Home() {
   /* ===== SLIDER ===== */
   useEffect(() => {
     if (!banners.length) return;
-    const interval = setInterval(
-      () => setCurrent((prev) => (prev + 1) % banners.length),
-      5000
-    );
+    const interval = setInterval(() => setCurrent((prev) => (prev + 1) % banners.length), 5000);
     return () => clearInterval(interval);
   }, [banners]);
 
@@ -89,7 +83,6 @@ export default function Home() {
     );
   }
 
-  /* ===== IMAGE STYLES (INLINE ONLY) ===== */
   const imgWrapStyle = {
     width: "100%",
     height: "200px",
@@ -168,9 +161,13 @@ export default function Home() {
       <div className="container">
         <div className="homeheader d-flex justify-content-between mb-2">
           <h3 className="fw-bold">{t("featuredOffers")}</h3>
-          <Link className="home-view-btn" to="/offers">
+          <span
+            className="home-view-btn"
+            onClick={() => navigate("/seller/sellerproductlist")}
+            style={{ cursor: "pointer" }}
+          >
             رؤية المزيد
-          </Link>
+          </span>
         </div>
 
         <div className="row">
@@ -179,13 +176,11 @@ export default function Home() {
               <div className="product-card">
                 <div
                   style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigate(`/advertisementdetails/${item.id}`)
-                  }
+                  onClick={() => navigate(`/advertisementdetails/${item.id}`)}
                 >
                   <div style={imgWrapStyle}>
                     <img
-                      src={item.image?.[0] || ""}
+                      src={item.images?.[0] || ""}
                       alt={item.name}
                       className="product-img"
                       style={imgStyle}
@@ -202,7 +197,7 @@ export default function Home() {
                       ? item.priceAfterDiscount
                       : item.price) +
                       " " +
-                      item.currency_type}
+                      item.currencyType}
                   </p>
                 </div>
 
@@ -233,13 +228,11 @@ export default function Home() {
               <div className="product-card">
                 <div
                   style={{ cursor: "pointer" }}
-                  onClick={() =>
-                    navigate(`/advertisementdetails/${item.id}`)
-                  }
+                  onClick={() => navigate(`/advertisementdetails/${item.id}`)}
                 >
                   <div style={imgWrapStyle}>
                     <img
-                      src={item.image?.[0] || ""}
+                      src={item.images?.[0] || ""}
                       alt={item.name}
                       className="product-img"
                       style={imgStyle}
@@ -256,7 +249,7 @@ export default function Home() {
                       ? item.priceAfterDiscount
                       : item.price) +
                       " " +
-                      item.currency_type}
+                      item.currencyType}
                   </p>
                 </div>
 
