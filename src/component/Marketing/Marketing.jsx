@@ -91,7 +91,13 @@ export default function Marketing() {
               <span className="px-2">إضافة إعلان</span>
             </Link>
 
-            <Link to="/accounttype" className="side-btn logout">
+            <Link
+              to="/accounttype"
+              className="side-btn logout"
+              onClick={() => {
+                localStorage.removeItem("token"); 
+              }}
+            >
               <img src={logoutimg} alt="" />
               <span className="px-2">تسجيل الخروج</span>
             </Link>

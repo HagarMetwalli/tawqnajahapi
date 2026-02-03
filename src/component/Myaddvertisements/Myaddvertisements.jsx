@@ -1,74 +1,55 @@
-import React from "react";
-import item1 from "../../assets/sale-friday.jpg";
-import item2 from "../../assets/winter-shirt.jpg";
-import item3 from "../../assets/burger-sale.jpg";
-import item4 from "../../assets/mobile.jpg";
-import "../Myaddvertisements/Myaddvertisements.css";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
+import "../Myaddvertisements/Myaddvertisements.css";
+import { BaseUrl } from "../../App";
+import BuyerServicesUrl from "../../BuyerServicesUrl";
 export default function Myaddvertisements() {
-  const items = [
-    {
-      id: 1,
-      img: item1,
-      title: "تخفيضات الجمعة السوداء",
-      desc: "عروض مذهلة على المنتجات...",
-      price: "99.99 ر.س",
-    },
-    {
-      id: 2,
-      img: item2,
-      title: "جاكيت شتوي",
-      desc: "جاكيت أنيق بتخفيض خاص...",
-      price: "149.99 ر.س",
-    },
-    {
-      id: 3,
-      img: item3,
-      title: "عرض البرجر",
-      desc: "وجبة برجر شهية بسعر مميز...",
-      price: "29.99 ر.س",
-    },
-    {
-      id: 4,
-      img: item4,
-      title: "هاتف ذكي",
-      desc: "هاتف بتقنية حديثة يدعم أحدث الميزات...",
-      price: "1999.99 ر.س",
-    },
-  ];
+  const [items, setItems] = useState([]);
+
+  useEffect(() => {
+    
+    axios
+      .get(BaseUrl + BuyerServicesUrl.ShowAdvertisements,  {
+          headers: {
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        })
+      .then((res) => {
+        if (res.data.status === 200) {
+          setItems(res.data.data);
+        }
+      })
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <div className="sellerrelated-section m-auto pb-5 pt-4">
-      <div className="related-header  mb-5 pb-5">
-        {/* <h3 className="related-title">ذات صلة</h3> */}
-
-        {/* <Link to="/seller/sellermystore" className="related-view-btn">
-          رؤية المزيد
-        </Link> */}
+      <div className="related-header mb-5 pb-5">
+        {/* Optional header */}
       </div>
 
- <div className="related-cards mb-5">
-  {items.map((item, index) => {
-    let link = "#";
-
-    if (index === 0) link = "/winterdetails";
-    if (index === 1) link = "/winterjacketdetails";
-
-
-    return (
-      <Link
-        to={link}
-        className="related-card"
-        key={item.id}
-      >
-        <img src={item.img} alt={item.title} />
-        <h4>{item.title}</h4>
-        <p className="desc">{item.desc}</p>
-        <p className="price">{item.price}</p>
-      </Link>
-    );
-  })}
-</div>
+      <div className="related-cards mb-5">
+        {items.map((item, index) => {
+          let link = "#"; // Keep current linking logic if needed
+          return (
+            <Link
+              to={link}
+              className="related-card"
+              key={item.id}
+            >
+              <img src={item.image[0]} alt={item.name} />
+              <h4>{item.name}</h4>
+              <p className="desc">{item.description}</p>
+              <p className="price">
+                {item.priceAfterDiscount
+                  ? `${item.priceAfterDiscount} ر.س`
+                  : `${item.price} ر.س`}
+              </p>
+            </Link>
+          );
+        })}
+      </div>
     </div>
   );
 }

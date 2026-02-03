@@ -18,7 +18,7 @@ export default function Navbar() {
   const menuRef = useRef(null);
   const navigate = useNavigate();
   const { t, i18n } = useTranslation();
-
+  const isLoggedIn = !!localStorage.getItem("token");
   const [isArabic, setIsArabic] = useState(() => {
     return i18n.language === "ar";
   });
@@ -64,43 +64,43 @@ export default function Navbar() {
             >
               {t("home")}
             </NavLink>
+            {isLoggedIn && (<>
+              <NavLink
+                to="/eyesupport"
+                className={({ isActive }) =>
+                  isActive ? "tn-nav-link active" : "tn-nav-link"
+                }
+              >
+                {t("support")}
+              </NavLink>
 
-            <NavLink
-              to="/eyesupport"
-              className={({ isActive }) =>
-                isActive ? "tn-nav-link active" : "tn-nav-link"
-              }
-            >
-              {t("support")}
-            </NavLink>
+              <NavLink
+                to="/confirmedorders"
+                className={({ isActive }) =>
+                  isActive ? "tn-nav-link active" : "tn-nav-link"
+                }
+              >
+                {t("orders")}
+              </NavLink>
 
-            <NavLink
-              to="/confirmedorders"
-              className={({ isActive }) =>
-                isActive ? "tn-nav-link active" : "tn-nav-link"
-              }
-            >
-              {t("orders")}
-            </NavLink>
+              <NavLink
+                to="/favorites"
+                className={({ isActive }) =>
+                  isActive ? "tn-nav-link active" : "tn-nav-link"
+                }
+              >
+                {t("favorites")}
+              </NavLink>
 
-            <NavLink
-              to="/favorites"
-              className={({ isActive }) =>
-                isActive ? "tn-nav-link active" : "tn-nav-link"
-              }
-            >
-              {t("favorites")}
-            </NavLink>
-
-            <NavLink
-              to="/marketing"
-              className={({ isActive }) =>
-                isActive ? "tn-nav-link active" : "tn-nav-link"
-              }
-            >
-              {t("marketing")}
-            </NavLink>
-
+              <NavLink
+                to="/marketing"
+                className={({ isActive }) =>
+                  isActive ? "tn-nav-link active" : "tn-nav-link"
+                }
+              >
+                {t("marketing")}
+              </NavLink>
+            </>)}
             <NavLink
               to="/abouttawq"
               className={({ isActive }) =>

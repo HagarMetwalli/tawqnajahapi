@@ -1,4 +1,3 @@
-import ChangePassword from "./component/ChangePassword/ChangePassword";
 
 const BuyerServicesUrl = {
  //Auth
@@ -14,8 +13,10 @@ const BuyerServicesUrl = {
 
   //Product
   GetProductList: "user/products?type=normal",
+  GetProductsFavoriteList: "user/products-favorite",
   GetProductById: "user/products/{id}",
   RateProduct:"user/products/{id}/add-rate",
+  AddProductToFavorites:"user/products/{id}/favorite",
   // Marketing ✅
   Marketing: "user/marketing",
   // Support
@@ -38,8 +39,10 @@ MyOrders: "user/my-order",
 AddToCart:"user/add-to-cart",
 ShowCart:"user/show-my-cart",
 ChangeCart:"user/change-cart",
-RemoveCart:"user/remove-from-cart"
-
+RemoveCart:"user/remove-from-cart",
+//Adds
+AddAdvertisement:"user/products/create-ad",
+ShowAdvertisements:"user/products-my-ads",
 
 };
 
